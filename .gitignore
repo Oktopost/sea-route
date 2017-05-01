@@ -1,0 +1,20 @@
+# IDE Folders
+/.buildpath
+/.project
+/.settings
+/.idea
+
+# OS Folders
+.DS_Store
+
+# Node
+/node_modules/*
+
+# Local files
+npm-debug.log
+test.js
+test/all.browserify
+
+
+# Build directories
+/bin

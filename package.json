@@ -1,0 +1,35 @@
+{
+  "name": "oktopost-sea-route",
+  "version": "1.0.0",
+  "description": "A set of helpfull functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "authors": [
+    {
+      "name": "Alexey Puchkov",
+      "email": "alexey@oktopost.com",
+      "url": "http://www.oktopost.com/"
+    }
+  ],
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Oktopost/sea-route.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "del": "^2.2.2",
+    "mocha": "^3.2.0",
+    "istanbul": "^0.4.5",
+    "coveralls": "2.10.0"
+  },
+  "dependencies": {
+    "oktopost-classy": "^1.0.1",
+    "oktopost-namespace": "^1.2.0",
+    "oktopost-plankton": "^0.1.10"
+  }
+}
