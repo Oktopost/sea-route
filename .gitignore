@@ -10,11 +10,15 @@
 # Node
 /node_modules/*
 
+# Test results
+/coverage
+
 # Local files
 npm-debug.log
 test.js
 test/all.browserify
 
 
-# Build directories
-/bin
+# Build resources
+/namespace-min.js
+/namespace.js

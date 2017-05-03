@@ -1,6 +1,6 @@
-# oktopost-plankton-is
+# oktopost-sea-route
 
 
-[![NPM Version](https://img.shields.io/npm/v/oktopost-plankton-is.svg)](https://www.npmjs.com/package/oktopost-plankton-is)
-[![Build Status](https://travis-ci.org/Oktopost/plankton-is.svg?branch=master)](https://travis-ci.org/Oktopost/plankton-is)
-[![Coverage Status](https://coveralls.io/repos/github/Oktopost/plankton-is/badge.svg?branch=master&2)](https://coveralls.io/github/Oktopost/plankton-is?branch=master&2)
+[![NPM Version](https://img.shields.io/npm/v/oktopost-sea-route.svg)](https://www.npmjs.com/package/oktopost-sea-route)
+[![Build Status](https://travis-ci.org/Oktopost/sea-route.svg?branch=master)](https://travis-ci.org/Oktopost/sea-route)
+[![Coverage Status](https://coveralls.io/repos/github/Oktopost/sea-route/badge.svg?branch=master&2)](https://coveralls.io/github/Oktopost/sea-route?branch=master&2)
