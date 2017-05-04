@@ -6,6 +6,7 @@ const SeaRoute = require('../../../index');
 const Part = SeaRoute.route.Part;
 const Param = SeaRoute.params.Param;
 const CallbackParam = SeaRoute.params.CallbackParam;
+
 const assert = require('chai').assert;
 
 

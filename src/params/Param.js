@@ -41,7 +41,7 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 	 * @return {boolean}
 	 */
 	Param.prototype.hasDefaultValue = function() {
-		return this._isOptional && is(this._defaultValue);
+		return this._isOptional && is.defined(this._defaultValue);
 	};
 	
 	/**
