@@ -12,6 +12,10 @@ require('./src/params/CallbackParam');
 require('./src/route/Part');
 require('./src/route/Path');
 require('./src/route/Query');
+require('./src/route/utils/MapCursor');
+require('./src/route/utils/MatchCursor');
+require('./src/route/utils/PathMatcher');
+require('./src/route/utils/Mapper');
 require('./src/route/Route');
 
 
