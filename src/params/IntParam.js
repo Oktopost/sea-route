@@ -20,8 +20,8 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 	var IntParam = function(name, min, max) {
 		Param.call(this, name);
 		
-		this._min = min || Number.MIN_VALUE;
-		this._max = max || Number.MAX_VALUE;
+		this._min = is.number(min) ? min : Number.MIN_VALUE;
+		this._max = is.number(max) ? max : Number.MAX_VALUE;
 	};
 	
 	
@@ -40,7 +40,7 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 			return false;
 		}
 		
-		return (value > this._min && value < this._max);
+		return (value >= this._min && value <= this._max);
 	};
 	
 	/**
@@ -49,10 +49,14 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 	 */
 	IntParam.prototype.encode = function (data) {
 		if (!is.number(data)) {
+			data = Number.parseInt(data.toString());
 			
+			if (is.NaN(data)) {
+				throw "Invalid parameter provided for " + this.name();
+			}
 		}
 		
-		return data.toString();
+		return Math.round(data).toString();
 	};
 	
 	/**
