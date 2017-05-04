@@ -13,23 +13,20 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 	 * @name SeaRoute.route.utils.Mapper
 	 */
 	var Mapper = {
-
 		/**
 		 * @param {*} element
 		 * @param {SeaRoute.route.utils.MapCursor} cursor
 		 * @return {null|*}
 		 */
 		mergeWithElement: function (element, cursor) {
-			if (cursor.EOP) {
-				return false;
-			} else if (element instanceof Route) {
-				return Mapper.mergeWithRoute(element, cursor);
-			} else if (is.array(element)) {
+			if (is.array(element)) {
 				return Mapper.mergeWithArray(element, cursor);
+			} else if (cursor.EOP) {
+				return false;
 			} else if (is.object(element)) {
 				return Mapper.mergeWithMap(element, cursor);
 			} else {
-				throw 'Unexpected element: ' + element.toString();
+				return Mapper.mergeWithRoute(element, cursor);
 			}
 		},
 		
