@@ -29,13 +29,9 @@ suite('RegexParam', () => {
 		});
 		
 		test('invalid string', () => {
-			try {
+			assert.throws(() => {
 				(new RegexParam('a', /^1$/)).encode('a');
-			} catch (e) {
-				return;
-			}
-			
-			assert.fail();
+			});
 		});
 	});
 	

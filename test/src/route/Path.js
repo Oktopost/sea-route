@@ -299,13 +299,9 @@ suite('Path', () => {
 			path.addPart(part1);
 			path.addPart(part2);
 			
-			try {
+			assert.throws(() => {
 				path.encode({});
-			} catch (e) {
-				return;
-			}
-			
-			assert.fail();
+			});
 		});
 		
 		test('Optional Part at middle, error thrown', () => {
@@ -322,13 +318,9 @@ suite('Path', () => {
 			path.addPart(part1);
 			path.addPart(part2);
 			
-			try {
+			assert.throws(() => {
 				path.encode({});
-			} catch (e) {
-				return;
-			}
-			
-			assert.fail();
+			});
 		});
 		
 		test('Required param not passed, error thrown', () => {
@@ -344,13 +336,9 @@ suite('Path', () => {
 			path.addPart(part1);
 			path.addPart(part2);
 			
-			try {
+			assert.throws(() => {
 				path.encode({});
-			} catch (e) {
-				return;
-			}
-			
-			assert.fail();
+			});
 		});
 		
 		test('Values for parameter passed', () => {
@@ -392,6 +380,41 @@ suite('Path', () => {
 			path.addPart(part3);
 			
 			assert.equal('/a/555/123', path.encode({n: 'abc'}));
+		});
+		
+		test('Value is escaped', () => {
+			let path = new Path('/a/b');
+			
+			let part1 = new Part('a');
+			let part2 = new Part('b');
+			
+			let param2 = new CallbackParam('n', { encode: () => { return 'a b'; } });
+			part2.setParam(param2);
+			
+			path.addPart(part1);
+			path.addPart(part2);
+			
+			assert.equal('/a/a%20b', path.encode({n: 'a'}));
+		});
+		
+		test('Const value is encoded', () => {
+			let path = new Path('/a/b');
+			
+			let part1 = new Part('a');
+			let part2 = new Part('b');
+			let part3 = new Part('c');
+			
+			let param2 = new Param('n');
+			param2.setDefaultValue('a b');
+			param2.setIsOptional(true);
+			param2.setIsAutoFillURL(false);
+			part2.setParam(param2);
+			
+			path.addPart(part1);
+			path.addPart(part2);
+			path.addPart(part3);
+			
+			assert.equal('/a/a%20b/c', path.encode({}));
 		});
 	});
 });

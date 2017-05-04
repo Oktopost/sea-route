@@ -11,6 +11,8 @@ require('./src/params/CallbackParam');
 
 require('./src/route/Part');
 require('./src/route/Path');
+require('./src/route/Query');
+require('./src/route/Route');
 
 
 module.exports = SeaRoute;

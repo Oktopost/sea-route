@@ -46,13 +46,9 @@ suite('IntParam', () => {
 		});
 		
 		test('invalid string number', () => {
-			try {
+			assert.throws(() => {
 				(new IntParam('a')).encode('a');
-			} catch (e) {
-				return;
-			}
-			
-			assert.fail();
+			});
 		});
 	});
 	

@@ -18,8 +18,8 @@ require('../../namespace').namespace('SeaRoute.route', function(root) {
 		this._path = path;
 		this._parts = [];
 	};
-
-
+	
+	
 	/**
 	 * @param {SeaRoute.route.Part} part
 	 * @param {string} pathPart
@@ -34,21 +34,21 @@ require('../../namespace').namespace('SeaRoute.route', function(root) {
 		return part.validate(pathPart);
 	};
 	
-
+	
 	/**
 	 * @return {string}
 	 */
 	Path.prototype.text = function () {
 		return this._path;
 	};
-
+	
 	/**
 	 * @return {SeaRoute.route.Part[]}
 	 */
 	Path.prototype.parts = function () {
 		return this._parts;
 	};
-
+	
 	/**
 	 * @param {SeaRoute.route.Part|SeaRoute.route.Part[]} part
 	 * @return {SeaRoute.route.Path}
@@ -57,7 +57,7 @@ require('../../namespace').namespace('SeaRoute.route', function(root) {
 		this._parts.push(part);
 		return this;
 	};
-
+	
 	/**
 	 * @return {Number}
 	 */
@@ -115,7 +115,7 @@ require('../../namespace').namespace('SeaRoute.route', function(root) {
 			// If the parameter has a default value (means it also optional) add it's value only if more 
 			// parameters later in the chain are passed.
 			} else if (paramObj.hasDefaultValue()) {
-				optional.push(part.encode(paramObj.defaultValue()))
+				optional.push(encodeURI(part.encode(paramObj.defaultValue())));
 			
 			// If the parameter is optional but was not provided and default value is not set: 
 			// No more parameters can be added to the path.
@@ -124,7 +124,7 @@ require('../../namespace').namespace('SeaRoute.route', function(root) {
 				
 			// Else, the parameter is required.
 			} else {
-				throw 'Parameter ' + paramObj.name() + ' is required for the path [' + this._path + ']';
+				throw 'Parameter ' + paramObj.name() + ' is required for the path ' + this._path;
 			}
 			
 			if (is(value)) {
@@ -138,7 +138,7 @@ require('../../namespace').namespace('SeaRoute.route', function(root) {
 					optional = [];
 				}
 				
-				rawPath.push(value);
+				rawPath.push(encodeURI(value));
 			}
 		}
 		
