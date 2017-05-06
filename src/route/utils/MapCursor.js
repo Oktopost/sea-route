@@ -62,6 +62,8 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 		this.index		= index;
 		this.EOP		= (this.index === this.rawParts.length);
 		this.current	= (this.EOP ? false : this.rawParts[this.index]);
+		
+		return true;
 	};
 
 
@@ -88,7 +90,7 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 		
 		cursor.getCompareElement = function (arr) { return arr[0]; };
 		cursor.getCompareElementIndex = function (arr) { return arr.length - 1; };
-		cursor.addRoute = function (arr, element) { arr.unshift(element); return arr; }
+		cursor.addRoute = function (arr, element) { arr.unshift(element); return arr; };
 		
 		return cursor;
 	};

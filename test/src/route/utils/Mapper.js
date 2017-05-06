@@ -128,12 +128,13 @@ suite('Mapper', () => {
 		} catch (e) {
 			console.log(e);
 			
-			console.error('Expected', _getPrintObject(expected));
-			console.error('Result', _getPrintObject(result));
+			console.log('Expected', JSON.stringify(_getPrintObject(expected), null, ''));
+			console.log('Result', JSON.stringify(_getPrintObject(result), null, ''));
 			
 			assert.fail('Object not match');
 		}
 	}
+	
 	
 	test('Two non const routes, appended', () => {
 		var map	= [
@@ -149,7 +150,7 @@ suite('Mapper', () => {
 				route
 			],
 			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
-		)
+		);
 	});
 	
 	test('Two non const routes, prepended', () => {
@@ -166,7 +167,7 @@ suite('Mapper', () => {
 				...original
 			],
 			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
-		)
+		);
 	});
 	
 	test('Not matching mapped object, appended', () => {
@@ -185,7 +186,7 @@ suite('Mapper', () => {
 				route
 			],
 			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
-		)
+		);
 	});
 	
 	test('Not matching mapped object, prepended', () => {
@@ -204,7 +205,7 @@ suite('Mapper', () => {
 				...original
 			],
 			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
-		)
+		);
 	});
 	
 	test('Matching mapped object, appended', () => {
@@ -227,7 +228,7 @@ suite('Mapper', () => {
 				}
 			],
 			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
-		)
+		);
 	});
 	
 	test('Matching mapped object, prepended', () => {
@@ -250,7 +251,7 @@ suite('Mapper', () => {
 				}
 			],
 			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
-		)
+		);
 	});
 	
 	test('Map missing key, appended', () => {
@@ -271,7 +272,7 @@ suite('Mapper', () => {
 				}
 			],
 			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
-		)
+		);
 	});
 	
 	test('Map missing key, prepended', () => {
@@ -292,7 +293,7 @@ suite('Mapper', () => {
 				}
 			],
 			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
-		)
+		);
 	});
 	
 	test('Map with array value, appended', () => {
@@ -318,7 +319,7 @@ suite('Mapper', () => {
 				}
 			],
 			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
-		)
+		);
 	});
 	
 	test('Map with array value, prepend', () => {
@@ -344,6 +345,298 @@ suite('Mapper', () => {
 				}
 			],
 			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
-		)
+		);
+	});
+	
+	test('Map with a map inside, appended', () => {
+		var map	= [
+			{
+				a: {
+					b: createRoute('a', ['a', 'b'])
+				}
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'b']);
+		
+		assertMap(
+			[
+				{
+					a: {
+						b: [
+							original[0].a.b,
+							route
+						]
+					}
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
+		);
+	});
+	
+	test('Map with a map inside, prepend', () => {
+		var map	= [
+			{
+				a: {
+					b: createRoute('a', ['a', 'b'])
+				}
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'b']);
+		
+		assertMap(
+			[
+				{
+					a: {
+						b: [
+							route,
+							original[0].a.b
+						]
+					}
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
+		);
+	});
+	
+	test('Route inside a map with different path, appended', () => {
+		var map	= [
+			{
+				a: createRoute('a', ['a', 'b'])
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'c']);
+		
+		assertMap(
+			[
+				{
+					a: {
+						b: original[0].a,
+						c: route
+					}
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
+		);
+	});
+	
+	test('Route inside a map with different path, prepend', () => {
+		var map	= [
+			{
+				a: createRoute('a', ['a', 'b'])
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'c']);
+		
+		assertMap(
+			[
+				{
+					a: {
+						b: original[0].a,
+						c: route
+					}
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
+		);
+	});
+	
+	test('Route inside a map with deeper path, appended', () => {
+		var map	= [
+			{
+				a: createRoute('a', ['a', 'b', 'c'])
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'b']);
+		
+		assertMap(
+			[
+				{
+					a: {
+						b: [
+							original[0].a,
+							route
+						]
+					}
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
+		);
+	});
+	
+	test('Route inside a map with deeper path, prepend', () => {
+		var map	= [
+			{
+				a: createRoute('a', ['a', 'b', 'c'])
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'b']);
+		
+		assertMap(
+			[
+				{
+					a: {
+						b: [
+							route,
+							original[0].a
+						]
+					}
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
+		);
+	});
+	
+	test('Route inside a map with shorter path, appended', () => {
+		var map	= [
+			{
+				a: createRoute('a', ['a', 'b'])
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'b', 'c']);
+		
+		assertMap(
+			[
+				{
+					a: {
+						b: [
+							original[0].a,
+							route
+						]
+					}
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
+		);
+	});
+	
+	test('Route inside a map with shorter path, prepend', () => {
+		var map	= [
+			{
+				a: createRoute('a', ['a', 'b'])
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'b', 'c']);
+		
+		assertMap(
+			[
+				{
+					a: {
+						b: [
+							route,
+							original[0].a
+						]
+					}
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
+		);
+	});
+	
+	test('Route inside a map with no path, appended', () => {
+		var map	= [
+			{
+				a: createRoute('a', ['a'])
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'b']);
+		
+		assertMap(
+			[
+				{
+					a: [
+						original[0].a,
+						route
+					]
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
+		);
+	});
+	
+	test('Route inside a map with no path, prepend', () => {
+		var map	= [
+			{
+				a: createRoute('a', ['a'])
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'b']);
+		
+		assertMap(
+			[
+				{
+					a: [
+						route,
+						original[0].a
+					]
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
+		);
+	});
+	
+	test('Route inside a map with new route without path, appended', () => {
+		var map	= [
+			{
+				a: createRoute('a', ['a', 'b'])
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a']);
+		
+		assertMap(
+			[
+				{
+					a: [
+						original[0].a,
+						route
+					]
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
+		);
+	});
+	
+	test('Route inside a map with new route without path, prepend', () => {
+		var map	= [
+			{
+				a: createRoute('a', ['a', 'b'])
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a']);
+		
+		assertMap(
+			[
+				{
+					a: [
+						route,
+						original[0].a
+					]
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
+		);
 	});
 });

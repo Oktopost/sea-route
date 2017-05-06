@@ -2,31 +2,41 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 	'use strict';
 	
 	
-	var is		= root.Plankton.is;
-	var array	= root.Plankton.array;
+	var is = root.Plankton.is;
 	
-	var Route		= root.SeaRoute.route.Route;
-	var MapCursor	= root.SeaRoute.route.utils.MapCursor;
+	var MapCursor = root.SeaRoute.route.utils.MapCursor;
 	
 	
 	/**
 	 * @name SeaRoute.route.utils.Mapper
 	 */
 	var Mapper = {
+
+		/**
+		 * @param {*} object
+		 * @private
+		 */
+		_isRoute: function (object) {
+			return is.defined(object) && is.function(object.path);
+		},
+		
+		
 		/**
 		 * @param {*} element
 		 * @param {SeaRoute.route.utils.MapCursor} cursor
 		 * @return {null|*}
 		 */
 		mergeWithElement: function (element, cursor) {
-			if (is.array(element)) {
+			if (Mapper._isRoute(element)) {
+				return Mapper.mergeWithRoute(element, cursor);
+			} else if (is.array(element)) {
 				return Mapper.mergeWithArray(element, cursor);
 			} else if (cursor.EOP) {
 				return false;
 			} else if (is.object(element)) {
 				return Mapper.mergeWithMap(element, cursor);
 			} else {
-				return Mapper.mergeWithRoute(element, cursor);
+				throw 'Unexpected object ' + element.toString()
 			}
 		},
 		
@@ -37,26 +47,51 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 		 */
 		mergeWithRoute: function (route, cursor) {
 			var targetCursor = new MapCursor(route);
-			var result = {};
-			var chain = result;
+			
+			var chain;
+			var chainTip;
+			var result		= false;
+			var currentKey	= '';
+			var index		= cursor.index;
 			
 			if (!targetCursor.goto(cursor.index) || targetCursor.EOP) {
 				return false;
 			}
 			
 			while (targetCursor.current === cursor.current && !targetCursor.EOP && !cursor.EOP) {
-				var newChainTip = {};
-				chain[targetCursor.current] = newChainTip;
-				chain = newChainTip;
+				if (result === false) {
+					result = {};
+					chain = result;
+				} else {
+					chain[currentKey] = {};
+					chain = chain[currentKey];
+					currentKey = targetCursor.current; 
+				}
+				
+				currentKey = targetCursor.current; 
 				
 				targetCursor.forward();
 				cursor.forward();
 			}
 			
-			chain[targetCursor.current] = route;
-			chain[cursor.current] = cursor.route;
-				
-			return result;
+			if (targetCursor.EOP || cursor.EOP) {
+				chainTip = [ route ];
+				chainTip = cursor.addRoute(chainTip, cursor.route);
+			} else {
+				chainTip = {};
+				chainTip[targetCursor.current] = route;
+				chainTip[cursor.current] = cursor.route;
+			}
+			
+			if (result !== false) {
+				result[currentKey] = chainTip;
+			} else {
+				result = chainTip;
+			}
+			
+			cursor.goto(index);
+			
+			return (result || chainTip);
 		},
 
 		/**
