@@ -6,6 +6,8 @@ var SeaRoute = require('./namespace').SeaRoute;
 
 require('./src/params/Param');
 require('./src/params/IntParam');
+require('./src/params/OneOfParam');
+require('./src/params/ConstParamDecorator');
 require('./src/params/RegexParam');
 require('./src/params/CallbackParam');
 
@@ -18,5 +20,9 @@ require('./src/route/utils/PathMatcher');
 require('./src/route/utils/Mapper');
 require('./src/route/Route');
 
+require('./src/parsers/ParamParser');
+
 
 module.exports = SeaRoute;
+
+

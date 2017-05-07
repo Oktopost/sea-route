@@ -27,6 +27,24 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 	
 	IntParam.prototype = Object.create(Param.prototype);
 	IntParam.prototype.constructor = IntParam;
+
+	/**
+	 * @param {Number} min
+	 * @return {SeaRoute.params.IntParam}
+	 */
+	IntParam.prototype.setMin = function (min) {
+		this._min = min;
+		return this;
+	};
+
+	/**
+	 * @param {Number} max
+	 * @return {SeaRoute.params.IntParam}
+	 */
+	IntParam.prototype.setMax = function (max) {
+		this._max = max;
+		return this;
+	};
 	
 	
 	/**
