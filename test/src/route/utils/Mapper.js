@@ -402,6 +402,60 @@ suite('Mapper', () => {
 		);
 	});
 	
+	test('Map with a map inside with long path, appended', () => {
+		var map	= [
+			{
+				a: {
+					b: createRoute('a', ['a', 'b', 'c', 'd', 'e'])
+				}
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'b', 'c', 'd', 'e']);
+		
+		assertMap(
+			[
+				{
+					a: { b: { c: { d: { e: 
+						[
+							original[0].a.b,
+							route
+						]
+					} } } } 
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
+		);
+	});
+	
+	test('Map with a map inside with long path, prepend', () => {
+		var map	= [
+			{
+				a: {
+					b: createRoute('b', ['a', 'b', 'c', 'd', 'e'])
+				}
+			}
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['a', 'b', 'c', 'd', 'e']);
+		
+		assertMap(
+			[
+				{
+					a: { b: { c: { d: { e: 
+						[
+							route,
+							original[0].a.b
+						]
+					} } } } 
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
+		);
+	});
+	
 	test('Route inside a map with different path, appended', () => {
 		var map	= [
 			{
@@ -638,5 +692,90 @@ suite('Mapper', () => {
 			],
 			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
 		);
+	});
+	
+	
+	test('No routes, appended', () => {
+		var map	= [
+			createRoute('a', [])
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', []);
+		
+		assertMap(
+			[
+				original[0],
+				route
+			],
+			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
+		);
+	});
+	
+	test('No routes, prepend', () => {
+		var map	= [
+			createRoute('a', [])
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', []);
+		
+		assertMap(
+			[
+				route,
+				original[0]
+			],
+			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
+		);
+	});
+	
+	test('No matching routes, appended', () => {
+		var map	= [
+			createRoute('a', ['a'])
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['b']);
+		
+		assertMap(
+			[
+				{
+					a: original[0],
+					b: route
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createAppendCursor(route))
+		);
+	});
+	
+	test('No matching routes, prepend', () => {
+		var map	= [
+			createRoute('a', ['a'])
+		];
+		
+		var original	= clone(map);
+		var route		= createRoute('b', ['b']);
+		
+		assertMap(
+			[
+				{
+					a: original[0],
+					b: route
+				}
+			],
+			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(route))
+		);
+	});
+	
+	
+	
+	test('Invalid element, error thrown', () => {
+		var map	= [
+			123
+		];
+		
+		assert.throws(() => {
+			Mapper.mergeWithArray(map, MapCursor.createPrependCursor(createRoute('a', ['a'])))
+		});
 	});
 });

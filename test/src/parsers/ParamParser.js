@@ -3,13 +3,12 @@
 
 const SeaRoute = require('../../../index');
 
-const Part = SeaRoute.route.Part;
 
 const Param					= SeaRoute.params.Param;
 const IntParam				= SeaRoute.params.IntParam;
 const RegexParam			= SeaRoute.params.RegexParam;
 const OneOfParam			= SeaRoute.params.OneOfParam;
-const CallbackParam			= SeaRoute.params.CallbackParam;
+const WildcardParam			= SeaRoute.params.WildcardParam;
 const ConstParamDecorator	= SeaRoute.params.ConstParamDecorator;
 
 const ParamParser = SeaRoute.parsers.ParamParser;
@@ -139,7 +138,7 @@ suite('ParamParser', () => {
 		
 		test('wildcard', () => {
 			var obj = ParamParser.parse('a', { type: 'wildcard', exp: 'a*b' });
-			assert.instanceOf(obj, RegexParam);
+			assert.instanceOf(obj, WildcardParam);
 		});
 		
 		test('invalid', () => {
@@ -213,6 +212,7 @@ suite('ParamParser', () => {
 			
 			assert.isTrue(obj.validate('ab'));
 			assert.isFalse(obj.validate('ac'));
+			assert.isFalse(obj.validate('nab'));
 		});
 	});
 });

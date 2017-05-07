@@ -5,11 +5,12 @@ var SeaRoute = require('./namespace').SeaRoute;
 
 
 require('./src/params/Param');
+require('./src/params/CallbackParam');
 require('./src/params/IntParam');
 require('./src/params/OneOfParam');
 require('./src/params/ConstParamDecorator');
 require('./src/params/RegexParam');
-require('./src/params/CallbackParam');
+require('./src/params/WildcardParam');
 
 require('./src/route/Part');
 require('./src/route/Path');
@@ -21,6 +22,7 @@ require('./src/route/utils/Mapper');
 require('./src/route/Route');
 
 require('./src/parsers/ParamParser');
+require('./src/parsers/PathParser');
 
 
 module.exports = SeaRoute;

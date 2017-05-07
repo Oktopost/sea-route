@@ -71,7 +71,7 @@ require('../../namespace').namespace('SeaRoute.parsers', function(root) {
 				throw 'The config "exp" is required for param of type "wildcard" and must be a string'; 
 			}
 			
-			return new params.RegexParam(name, new RegExp(config.exp.replace('*', '.*')));
+			return new params.WildcardParam(name, config.exp);
 		},
 		
 		

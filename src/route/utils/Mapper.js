@@ -84,7 +84,7 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 			}
 			
 			if (result !== false) {
-				result[currentKey] = chainTip;
+				chain[currentKey] = chainTip;
 			} else {
 				result = chainTip;
 			}
@@ -131,7 +131,7 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 			if (mergeResult === false) {
 				cursor.addRoute(set, cursor.route);
 			} else if (mergeResult !== element) {
-				set[cursor.getCompareElementIndex(set.length - 1)] = mergeResult;
+				set[cursor.getCompareElementIndex(set)] = mergeResult;
 			}
 			
 			return set;
