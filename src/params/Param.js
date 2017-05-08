@@ -3,6 +3,7 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 	
 	
 	var is = root.Plankton.is;
+	var classify = root.Classy.classify;
 	
 	
 	/**
@@ -20,6 +21,8 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 		this._isOptional	= false;
 		this._isAutoFillURL	= false;
 		this._defaultValue	= undefined;
+		
+		classify(this);
 	};
 	
 

@@ -18,7 +18,6 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 	 * @property {SeaRoute.params.Param} _original
 	 */
 	var PredefinedParamDecorator = function(name, param) {
-		var self = this;
 		Param.call(this, name);
 		
 		

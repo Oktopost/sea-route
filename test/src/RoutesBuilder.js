@@ -9,12 +9,12 @@ const obj = require('oktopost-plankton').obj;
 
 const Path		= SeaRoute.route.Path;
 const Route		= SeaRoute.route.Route;
-const Routes	= SeaRoute.Routes;
+const RoutesBuilder	= SeaRoute.RoutesBuilder;
 
 const assert = require('chai').assert;
 
 
-suite('Routes', () => {
+suite('RoutesBuilder', () => {
 	
 	function _create(path) {
 		path = path || '/';
@@ -24,14 +24,14 @@ suite('Routes', () => {
 	
 	test('(Route) - same route returned', () => {
 		var route = _create();
-		assert.equal(route, Routes.create(route));
+		assert.equal(route, (new RoutesBuilder()).create(route));
 	});
 	
 	test('([Route, Route]) - same routes returned', () => {
 		var route1 = _create();
 		var route2 = _create();
 		
-		var result = Routes.create([route1, route2]);
+		var result = (new RoutesBuilder()).create([route1, route2]);
 		
 		assert.equal(route1, result[0]);
 		assert.equal(route2, result[1]);
@@ -39,7 +39,7 @@ suite('Routes', () => {
 	
 	test('(string path, callback) - single route constructed', () => {
 		var isCalled = false;
-		var result = Routes.create('/a', () => { isCalled = true });
+		var result = (new RoutesBuilder()).create('/a', () => { isCalled = true });
 		
 		
 		assert.instanceOf(result, Route);
@@ -52,7 +52,7 @@ suite('Routes', () => {
 	
 	test('(string path, object config, callback) - single route constructed', () => {
 		var isCalled = false;
-		var result = Routes.create('/a', {}, () => { isCalled = true });
+		var result = (new RoutesBuilder()).create('/a', {}, () => { isCalled = true });
 		
 		
 		assert.instanceOf(result, Route);
@@ -65,7 +65,7 @@ suite('Routes', () => {
 	
 	test('(string path, object config) - single route constructed', () => {
 		var isCalled = false;
-		var result = Routes.create('/a', { callback: () => { isCalled = true } });
+		var result = (new RoutesBuilder()).create('/a', { callback: () => { isCalled = true } });
 		
 		
 		assert.instanceOf(result, Route);
@@ -76,9 +76,14 @@ suite('Routes', () => {
 		assert.isTrue(isCalled);
 	});
 	
+	test('(string path, { params: a, callback }) - params defined in config used', () => {
+		var result = (new RoutesBuilder()).create('/{a}', { params: { a: /abc/ },  callback: () => {} });
+		assert.instanceOf(result.path().parts()[0].getParam(), SeaRoute.params.RegexParam)
+	});
+	
 	test('(object config, callback) - single route constructed', () => {
 		var isCalled = false;
-		var result = Routes.create({ path: '/a' }, () => { isCalled = true });
+		var result = (new RoutesBuilder()).create({ path: '/a' }, () => { isCalled = true });
 		
 		assert.instanceOf(result, Route);
 		assert.equal('/a', result.pathText());
@@ -90,7 +95,7 @@ suite('Routes', () => {
 	
 	test('(object config) - single route constructed', () => {
 		var isCalled = false;
-		var result = Routes.create({ path: '/a', callback: () => { isCalled = true } });
+		var result = (new RoutesBuilder()).create({ path: '/a', callback: () => { isCalled = true } });
 		
 		assert.instanceOf(result, Route);
 		assert.equal('/a', result.pathText());
@@ -102,7 +107,7 @@ suite('Routes', () => {
 	
 	test('({ a: object, b: object }) - object with routes constructed', () => {
 		var isCalled = false;
-		var result = Routes.create(
+		var result = (new RoutesBuilder()).create(
 			{ 
 				a: { 
 					path: '/a', 
@@ -126,7 +131,7 @@ suite('Routes', () => {
 	
 	test('({ path: object }) - key used as path', () => {
 		var isCalled = false;
-		var result = Routes.create(
+		var result = (new RoutesBuilder()).create(
 			{ 
 				'a': {  
 					callback: () => {} 
@@ -140,7 +145,7 @@ suite('Routes', () => {
 	
 	test('({ a: { b: object } }) - Deep route constructed', () => {
 		var isCalled = false;
-		var result = Routes.create(
+		var result = (new RoutesBuilder()).create(
 			{ 
 				'a': {
 					'b': {
@@ -157,33 +162,46 @@ suite('Routes', () => {
 	});
 	
 	
+	test('predefined parameter used', () => {
+		var predefined = { a: new SeaRoute.params.RegexParam('a', /a/) };
+		var builder = new RoutesBuilder(predefined);
+		
+		var result = builder.create('/{a|[a]}', { callback: () => {} });
+		var param = result.path().parts()[0].getParam();
+		
+		assert.instanceOf(param, SeaRoute.params.PredefinedParamDecorator);
+		assert.isTrue(param.validate('a'));
+		assert.isFalse(param.validate('b'));
+	});
+	
+	
 	test('(object config, callback), missing path - error thrown', () => {
 		assert.throws(() => {
-			Routes.create({  }, () => {});
+			(new RoutesBuilder()).create({  }, () => {});
 		});
 	});
 	
 	test('(object config), missing path - error thrown', () => {
 		assert.throws(() => {
-			Routes.create({  callback: () => {} });
+			(new RoutesBuilder()).create({  callback: () => {} });
 		});
 	});
 	
 	test('(object config), missing callback - error thrown', () => {
 		assert.throws(() => {
-			Routes.create({ path: '/' });
+			(new RoutesBuilder()).create({ path: '/' });
 		});
 	});
 	
 	test('(invalid parameter) - error thrown', () => {
 		assert.throws(() => {
-			Routes.create(123);
+			(new RoutesBuilder()).create(123);
 		});
 	});
 	
 	test('(string path) - error thrown', () => {
 		assert.throws(() => {
-			Routes.create('/abc');
+			(new RoutesBuilder()).create('/abc');
 		});
 	});
 });
