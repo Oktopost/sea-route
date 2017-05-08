@@ -2,8 +2,8 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 	'use strict';
 	
 	
-	var is			= root.Plankton.is;
-	var array		= root.Plankton.array;
+	var is		= root.Plankton.is;
+	var array	= root.Plankton.array;
 	
 
 	/**

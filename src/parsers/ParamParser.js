@@ -111,7 +111,7 @@ require('../../namespace').namespace('SeaRoute.parsers', function(root) {
 			} else if (config instanceof RegExp) {
 				return new params.RegexParam(name, config);
 			} else if (!is.object(config)) {
-				throw 'Unexpected route config for ' + name + ', got ' + JSON.stringify(config);
+				throw new Error('Unexpected route config for ' + name + ', got ' + JSON.stringify(config));
 			} else if (is.defined(config[this.FLAGS.VALUE])) {
 				return this._createParam(name, config[this.FLAGS.VALUE]);
 			} else {
@@ -139,7 +139,8 @@ require('../../namespace').namespace('SeaRoute.parsers', function(root) {
 			// Set auto fill flag.
 			if (is.defined(config[this.FLAGS.AUTO_FILL])) {
 				if (!prm.hasDefaultValue()) {
-					throw 'Default value must be provided for a url with the "' + this.FLAGS.AUTO_FILL + '" flag';
+					throw new Error(
+						'Default value must be provided for a url with the "' + this.FLAGS.AUTO_FILL + '" flag');
 				}
 				
 				prm.setIsAutoFillURL(is(config[this.FLAGS.AUTO_FILL]));

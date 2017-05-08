@@ -5,8 +5,6 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 	var is			= root.Plankton.is;
 	var array		= root.Plankton.array;
 	
-	var Cursor = root.SeaRoute.route.utils.Cursor;
-	
 	
 	/**
 	 * @class SeaRoute.route.utils.MapCursor

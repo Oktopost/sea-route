@@ -30,7 +30,7 @@ require('../../namespace').namespace('SeaRoute.route', function(root) {
 	 * @return {boolean}
 	 */
 	Part.prototype.isConst = function () {
-		return !is(this._param);
+		return is.null(this._param);
 	};
 
 	/**

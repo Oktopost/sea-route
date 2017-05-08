@@ -2,8 +2,6 @@ require('../../namespace').namespace('SeaRoute.parsers', function(root) {
 	'use strict';
 	
 	
-	var params		= root.SeaRoute.params;
-	
 	var is			= root.Plankton.is;
 	var array		= root.Plankton.array;
 	var classify	= root.Classy.classify;

@@ -23,6 +23,7 @@ require('./src/route/Route');
 
 require('./src/parsers/ParamParser');
 require('./src/parsers/PathParser');
+require('./src/parsers/RouteParser');
 
 
 module.exports = SeaRoute;
