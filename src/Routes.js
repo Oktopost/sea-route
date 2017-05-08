@@ -75,6 +75,26 @@ require('../namespace').namespace('SeaRoute', function(root) {
 				callback:	callback
 			});
 		},
+		
+		/**
+		 * 
+		 * @param {{}} data
+		 * @return {{}}
+		 * @private
+		 */
+		_handleFromMap: function (data) {
+			var result = {};
+			
+			obj.forEach.pair(data, function (key, value) {
+				if (is.function(value.callback) && !is.string(value.path)) {
+					value.path = key;
+				}
+				
+				result[key] = Routes.create(value);
+			});
+			
+			return result;
+		},
 
 		/**
 		 * @param {*} data
@@ -88,7 +108,7 @@ require('../namespace').namespace('SeaRoute', function(root) {
 			} else if (is.function(data.callback)) {
 				return RouteParser.parse(data, {});
 			} else {
-				
+				return Routes._handleFromMap(data);
 			}
 		},
 

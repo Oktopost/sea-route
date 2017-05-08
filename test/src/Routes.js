@@ -14,7 +14,7 @@ const Routes	= SeaRoute.Routes;
 const assert = require('chai').assert;
 
 
-suite.only('Routes', () => {
+suite('Routes', () => {
 	
 	function _create(path) {
 		path = path || '/';
@@ -117,10 +117,10 @@ suite.only('Routes', () => {
 		assert.isFalse(is.array(result));
 		assert.deepEqual(['a', 'b'], obj.keys(result));
 		
-		assert.instanceOf(Route, result.a);
+		assert.instanceOf(result.a, Route);
 		assert.equal('/a', result.a.pathText());
 		
-		assert.instanceOf(Route, result.b);
+		assert.instanceOf(result.b, Route);
 		assert.equal('/b', result.b.pathText());
 	});
 	
@@ -134,7 +134,7 @@ suite.only('Routes', () => {
 			});
 		
 		assert.deepEqual(['a'], obj.keys(result));
-		assert.instanceOf(Route, result.a);
+		assert.instanceOf(result.a, Route);
 		assert.equal('/a', result.a.pathText());
 	});
 	
@@ -152,7 +152,7 @@ suite.only('Routes', () => {
 		
 		assert.deepEqual(['a'], obj.keys(result));
 		assert.deepEqual(['b'], obj.keys(result.a));
-		assert.instanceOf(Route, result.a.b);
+		assert.instanceOf(result.a.b, Route);
 		assert.equal('/somepath', result.a.b.pathText());
 	});
 	
