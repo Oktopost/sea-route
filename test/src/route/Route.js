@@ -11,7 +11,7 @@ const Route	= SeaRoute.route.Route;
 const assert = require('chai').assert;
 
 
-suite('Query', () => {
+suite('Route', () => {
 
 	/**
 	 * @return {SeaRoute.route.Route}

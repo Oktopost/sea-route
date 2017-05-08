@@ -25,6 +25,8 @@ require('./src/parsers/ParamParser');
 require('./src/parsers/PathParser');
 require('./src/parsers/RouteParser');
 
+require('./src/Routes');
+
 
 module.exports = SeaRoute;
 
