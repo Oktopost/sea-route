@@ -3,6 +3,7 @@ require('../namespace').namespace('SeaRoute', function(root) {
 	
 	
 	var Route		= root.SeaRoute.route.Route;
+	var Param		= root.SeaRoute.params.Param;
 	var RouteParser = root.SeaRoute.parsers.RouteParser;
 	
 	var is			= root.Plankton.is;
@@ -22,6 +23,20 @@ require('../namespace').namespace('SeaRoute', function(root) {
 		this._predefinedParams = predefinedParams || {};
 		
 		classify(this);
+	};
+	
+
+	/**
+	 * @param {string} name
+	 * @param {SeaRoute.params.Param} param
+	 * @private
+	 */
+	RoutesBuilder.prototype._addParam = function (name, param) {
+		if (is.defined(this._predefinedParams[name])) {
+			throw new Error('Parameter with name "' + param.name() + '" is already defined!');
+		}
+		
+		this._predefinedParams[name] = param;
 	};
 
 
@@ -153,7 +168,22 @@ require('../namespace').namespace('SeaRoute', function(root) {
 			throw new Error('Unexpected parameter passed!');
 		}
 	};
+
+	/**
+	 * @param {SeaRoute.params.Param|{SeaRoute.params.Param}} params
+	 */
+	RoutesBuilder.prototype.addParams = function (params) {
+		var self = this;
+		
+		if (params instanceof Param) {
+			this._addParam(params.name(), params);
+		} else {
+			obj.forEach.pair(params, function (key, param) {
+				self._addParam(key, param);
+			});
+		}
+	};
 	
 	
 	this.RoutesBuilder = RoutesBuilder;
-});
+}); 

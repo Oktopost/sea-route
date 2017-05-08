@@ -175,6 +175,42 @@ suite('RoutesBuilder', () => {
 	});
 	
 	
+	suite('addParams', () => {
+		test('Predefined parameter appender later', () => {
+			var predefined = { a: new SeaRoute.params.RegexParam('a', /a/) };
+			var builder = new RoutesBuilder();
+			
+			builder.addParams(predefined);
+			
+			var result = builder.create('/{a|[a]}', { callback: () => {} });
+			var param = result.path().parts()[0].getParam();
+			
+			assert.instanceOf(param, SeaRoute.params.PredefinedParamDecorator);
+		});
+		
+		test('Single parametre added ', () => {
+			var predefined = new SeaRoute.params.RegexParam('a', /a/);
+			var builder = new RoutesBuilder();
+			
+			builder.addParams(predefined);
+			
+			var result = builder.create('/{a|[a]}', { callback: () => {} });
+			var param = result.path().parts()[0].getParam();
+			
+			assert.instanceOf(param, SeaRoute.params.PredefinedParamDecorator);
+		});
+		
+		test('Parameter already defined, throw error', () => {
+			var predefined = new SeaRoute.params.RegexParam('a', /a/);
+			var builder = new RoutesBuilder();
+			
+			builder.addParams(predefined);
+			
+			assert.throws(() => { builder.addParams(predefined); });
+		});
+	});
+	
+	
 	test('(object config, callback), missing path - error thrown', () => {
 		assert.throws(() => {
 			(new RoutesBuilder()).create({  }, () => {});
