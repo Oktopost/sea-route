@@ -8,7 +8,7 @@ require('./src/params/Param');
 require('./src/params/CallbackParam');
 require('./src/params/IntParam');
 require('./src/params/OneOfParam');
-require('./src/params/ConstParamDecorator');
+require('./src/params/PredefinedParamDecorator');
 require('./src/params/RegexParam');
 require('./src/params/WildcardParam');
 

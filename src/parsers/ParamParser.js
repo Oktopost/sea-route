@@ -107,7 +107,7 @@ require('../../namespace').namespace('SeaRoute.parsers', function(root) {
 			} else if (is.string(config)) {
 				return new params.RegexParam(name, new RegExp(config.replace('*', '.*')));
 			} else if (config instanceof params.Param) {
-				return new params.ConstParamDecorator(name, config);
+				return new params.PredefinedParamDecorator(name, config);
 			} else if (config instanceof RegExp) {
 				return new params.RegexParam(name, config);
 			} else if (!is.object(config)) {

@@ -9,7 +9,7 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 	
 	
 	/**
-	 * @class SeaRoute.params.ConstParamDecorator
+	 * @class SeaRoute.params.PredefinedParamDecorator
 	 * 
 	 * @param {string} name
 	 * @param {SeaRoute.params.Param} param
@@ -17,9 +17,14 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 	 * @property {string} _name
 	 * @property {SeaRoute.params.Param} _original
 	 */
-	var ConstParamDecorator = function(name, param) {
+	var PredefinedParamDecorator = function(name, param) {
 		var self = this;
 		Param.call(this, name);
+		
+		
+		this.setIsAutoFillURL(param.isAutoFillURL());
+		this.setIsOptional(param.isOptional());
+		this.setDefaultValue(param.defaultValue());
 		
 		
 		this.validate	= param.validate;
@@ -28,9 +33,9 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 	};
 	
 	
-	ConstParamDecorator.prototype = Object.create(Param.prototype);
-	ConstParamDecorator.prototype.constructor = ConstParamDecorator;
+	PredefinedParamDecorator.prototype = Object.create(Param.prototype);
+	PredefinedParamDecorator.prototype.constructor = PredefinedParamDecorator;
 	
 	
-	this.ConstParamDecorator = ConstParamDecorator;
+	this.PredefinedParamDecorator = PredefinedParamDecorator;
 });

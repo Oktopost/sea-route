@@ -9,7 +9,7 @@ const IntParam				= SeaRoute.params.IntParam;
 const RegexParam			= SeaRoute.params.RegexParam;
 const OneOfParam			= SeaRoute.params.OneOfParam;
 const WildcardParam			= SeaRoute.params.WildcardParam;
-const ConstParamDecorator	= SeaRoute.params.ConstParamDecorator;
+const PredefinedParamDecorator	= SeaRoute.params.PredefinedParamDecorator;
 
 const ParamParser = SeaRoute.parsers.ParamParser;
 
@@ -106,7 +106,7 @@ suite('ParamParser', () => {
 			var prm = new Param('n');
 			var obj = ParamParser.parse('a', prm);
 			
-			assert.instanceOf(obj, ConstParamDecorator);
+			assert.instanceOf(obj, PredefinedParamDecorator);
 			assert.equal('a', obj.name());
 		});
 		
