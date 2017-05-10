@@ -2,39 +2,39 @@ require('../namespace').namespace('SeaRoute', function(root) {
 	'use strict';
 	
 	
-	var Params			= root.SeaRoute.Params;
 	var RoutesBuilder	= root.SeaRoute.RoutesBuilder;
+	var Route			= root.SeaRoute.route.Route;
 	var Mapper			= root.SeaRoute.route.utils.Mapper;
+	var MapCursor		= root.SeaRoute.route.utils.MapCursor;
 	var PathMatcher		= root.SeaRoute.route.utils.PathMatcher;
 	var MatchCursor		= root.SeaRoute.route.utils.MatchCursor;
-	var MapCursor		= root.SeaRoute.route.utils.MapCursor;
-	var Route			= root.SeaRoute.route.Route;
-	var Param			= root.SeaRoute.params.Param;
 	
 	var is			= root.Plankton.is;
 	var obj			= root.Plankton.obj;
 	var url			= root.Plankton.url;
-	var array		= root.Plankton.array;
 	var classify	= root.Classy.classify;
 	
 	
 	/**
 	 * @class SeaRoute.Router
 	 * 
-	 * @param {function(string)} navigateCallback
+	 * @param {function(string)}	navigateCallback
+	 * @param {function(string)=}	missHandler
 	 * 
 	 * @property {SeaRoute.RoutesBuilder}	_builder
 	 * @property {function(string)}			_navigate
+	 * @property {function(string)}			_onMiss
 	 * @property {[]}						_map
 	 */
-	var Router =  function (navigateCallback) {
+	var Router =  function (navigateCallback, missHandler) {
 		this._map		= [];
 		this._builder	= new RoutesBuilder();
 		this._navigate	= navigateCallback;
+		this._onMiss	= missHandler || Router._defaultOnMiss;
 		
 		classify(this);
 	};
-
+	
 
 	/**
 	 * @param {*|SeaRoute.route.Route} routes
@@ -42,13 +42,19 @@ require('../namespace').namespace('SeaRoute', function(root) {
 	 * @private
 	 */
 	Router.prototype._addRoutes = function (routes, cursorCreator) {
-		if (routes instanceof Route) {
-			Mapper.mergeWithArray(this._set, cursorCreator(routes));
-		}
+		var self = this;
 		
-		obj.forEach(routes, function (item) {
-			this._addRoutes(item, cursorCreator);
-		});
+		if (routes instanceof Route) {
+			if (this._map.length === 0) {
+				this._map.push(routes);
+			} else {
+				Mapper.mergeWithArray(this._map, cursorCreator(routes));
+			}
+		} else {
+			obj.forEach(routes, function (item) {
+				self._addRoutes(item, cursorCreator);
+			});
+		}
 	};
 
 
@@ -63,7 +69,7 @@ require('../namespace').namespace('SeaRoute', function(root) {
 	
 	Router.prototype.appendRoutes = function (routes) {
 		routes = this._builder.create(routes);
-		Mapper.mergeWithArray(routes, MapCursor.createAppendCursor);
+		this._addRoutes(routes, MapCursor.createAppendCursor);
 	};
 
 	/**
@@ -75,10 +81,10 @@ require('../namespace').namespace('SeaRoute', function(root) {
 		
 		if (is.string(target)) {
 			return url.encode(target, params);
-		} else if (target instanceof SeaRoute.route.Route) {
+		} else if (target instanceof Route) {
 			return target.buildPath(params);
 		} else {
-			throw new Error('target must be Route or string!');
+			throw new Error('Target must be Route or string!');
 		}
 	};
 	
@@ -94,7 +100,18 @@ require('../namespace').namespace('SeaRoute', function(root) {
 	 * @param {string} url
 	 */
 	Router.prototype.handle = function (url) {
-		PathMatcher.matchArray(this._map, new MatchCursor(url))
+		if (!PathMatcher.matchArray(this._map, new MatchCursor(url))) {
+			this._onMiss(url);
+		}
+	};
+	
+	
+	/**
+	 * @param {string} url
+	 * @private
+	 */
+	Router._defaultOnMiss = function (url) {
+		throw new Error('There is no route matching ' + url.toString() + ' url');
 	};
 	
 	

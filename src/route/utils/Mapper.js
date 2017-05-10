@@ -4,22 +4,14 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 	
 	var is = root.Plankton.is;
 	
-	var MapCursor = root.SeaRoute.route.utils.MapCursor;
+	var Route		= root.SeaRoute.route.Route;
+	var MapCursor	= root.SeaRoute.route.utils.MapCursor;
 	
 	
 	/**
 	 * @name SeaRoute.route.utils.Mapper
 	 */
 	var Mapper = {
-
-		/**
-		 * @param {*} object
-		 * @private
-		 */
-		_isRoute: function (object) {
-			return is.defined(object) && is.function(object.path);
-		},
-		
 		
 		/**
 		 * @param {*} element
@@ -27,7 +19,7 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 		 * @return {null|*}
 		 */
 		mergeWithElement: function (element, cursor) {
-			if (Mapper._isRoute(element)) {
+			if (element instanceof Route) {
 				return Mapper.mergeWithRoute(element, cursor);
 			} else if (is.array(element)) {
 				return Mapper.mergeWithArray(element, cursor);

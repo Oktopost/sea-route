@@ -16,11 +16,11 @@ require('./src/params/WildcardParam');
 require('./src/route/Part');
 require('./src/route/Path');
 require('./src/route/Query');
+require('./src/route/Route');
 require('./src/route/utils/MapCursor');
 require('./src/route/utils/MatchCursor');
 require('./src/route/utils/PathMatcher');
 require('./src/route/utils/Mapper');
-require('./src/route/Route');
 
 require('./src/parsers/ParamParser');
 require('./src/parsers/PathParser');
