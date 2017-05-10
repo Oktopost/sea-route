@@ -1,6 +1,6 @@
 {
   "name": "oktopost-sea-route",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A set of helpfull functions",
   "main": "index.js",
   "scripts": {
