@@ -10,6 +10,7 @@ require('./src/params/IntParam');
 require('./src/params/OneOfParam');
 require('./src/params/PredefinedParamDecorator');
 require('./src/params/RegexParam');
+require('./src/params/JsonParam');
 require('./src/params/WildcardParam');
 
 require('./src/route/Part');
@@ -25,10 +26,9 @@ require('./src/parsers/ParamParser');
 require('./src/parsers/PathParser');
 require('./src/parsers/RouteParser');
 
-require('./src/RoutesBuilder');
 require('./src/Params');
+require('./src/RoutesBuilder');
+require('./src/Router');
 
 
 module.exports = SeaRoute;
-
-

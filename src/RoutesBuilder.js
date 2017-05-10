@@ -2,6 +2,7 @@ require('../namespace').namespace('SeaRoute', function(root) {
 	'use strict';
 	
 	
+	var Params		= root.SeaRoute.Params;
 	var Route		= root.SeaRoute.route.Route;
 	var Param		= root.SeaRoute.params.Param;
 	var RouteParser = root.SeaRoute.parsers.RouteParser;
@@ -34,6 +35,10 @@ require('../namespace').namespace('SeaRoute', function(root) {
 	RoutesBuilder.prototype._addParam = function (name, param) {
 		if (is.defined(this._predefinedParams[name])) {
 			throw new Error('Parameter with name "' + param.name() + '" is already defined!');
+		}
+		
+		if (!(param instanceof Param)) {
+			param = Params.create({p: param}).p;
 		}
 		
 		this._predefinedParams[name] = param;

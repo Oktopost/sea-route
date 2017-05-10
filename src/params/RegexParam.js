@@ -41,7 +41,7 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 		data = data.toString();
 		
 		if (!this._regex.test(data)) {
-			throw "Pass variable doesn't match regex: " + this._regex.toString();
+			throw new Error('Pass variable doesn\'t match regex: ' + this._regex.toString());
 		}
 		
 		return data;

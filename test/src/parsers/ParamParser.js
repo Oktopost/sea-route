@@ -4,11 +4,12 @@
 const SeaRoute = require('../../../index');
 
 
-const Param					= SeaRoute.params.Param;
-const IntParam				= SeaRoute.params.IntParam;
-const RegexParam			= SeaRoute.params.RegexParam;
-const OneOfParam			= SeaRoute.params.OneOfParam;
-const WildcardParam			= SeaRoute.params.WildcardParam;
+const Param						= SeaRoute.params.Param;
+const IntParam					= SeaRoute.params.IntParam;
+const JsonParam					= SeaRoute.params.JsonParam;
+const RegexParam				= SeaRoute.params.RegexParam;
+const OneOfParam				= SeaRoute.params.OneOfParam;
+const WildcardParam				= SeaRoute.params.WildcardParam;
 const PredefinedParamDecorator	= SeaRoute.params.PredefinedParamDecorator;
 
 const ParamParser = SeaRoute.parsers.ParamParser;
@@ -195,6 +196,13 @@ suite('ParamParser', () => {
 			
 			assert.isTrue(obj.validate('a'));
 			assert.isFalse(obj.validate('b'));
+		});
+	});
+	
+	suite('Json param', () => {
+		test('Json param created', () => {
+			var obj = ParamParser.parse('a', { type: 'json' });
+			assert.instanceOf(obj, JsonParam);
 		});
 	});
 	

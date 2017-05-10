@@ -115,7 +115,7 @@ require('../../namespace').namespace('SeaRoute.route', function(root) {
 			// If the parameter has a default value (means it also optional) add it's value only if more 
 			// parameters later in the chain are passed.
 			} else if (paramObj.hasDefaultValue()) {
-				optional.push(encodeURI(part.encode(paramObj.defaultValue())));
+				optional.push(encodeURIComponent(part.encode(paramObj.defaultValue())));
 			
 			// If the parameter is optional but was not provided and default value is not set: 
 			// No more parameters can be added to the path.
@@ -124,13 +124,13 @@ require('../../namespace').namespace('SeaRoute.route', function(root) {
 				
 			// Else, the parameter is required.
 			} else {
-				throw 'Parameter ' + paramObj.name() + ' is required for the path ' + this._path;
+				throw new Error('Parameter ' + paramObj.name() + ' is required for the path ' + this._path);
 			}
 			
 			if (is(value)) {
 				if (!canHaveMoreParams) {
-					throw 'Optional parameter must be set if ' + paramObj.name() + ' is provided. ' + 
-						'Set ' + paramObj.name() + ' or provide a default value for it';
+					throw new Error('Optional parameter must be set if ' + paramObj.name() + ' is provided. ' + 
+						'Set ' + paramObj.name() + ' or provide a default value for it');
 				}
 				
 				if (is(optional)) {
@@ -138,7 +138,7 @@ require('../../namespace').namespace('SeaRoute.route', function(root) {
 					optional = [];
 				}
 				
-				rawPath.push(encodeURI(value));
+				rawPath.push(encodeURIComponent(value));
 			}
 		}
 		

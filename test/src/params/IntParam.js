@@ -57,4 +57,23 @@ suite('IntParam', () => {
 			assert.strictEqual(123, (new IntParam('a')).extract('123'));
 		});
 	});
+	
+	
+	test('setMin', () => {
+		var subject = new IntParam('a', -10, 10);
+		
+		subject.setMin(-8);
+		
+		assert.isFalse(subject.validate('-9'));
+		assert.isTrue(subject.validate('-8'));
+	});
+		
+	test('setMax', () => {
+		var subject = new IntParam('a', -10, 10);
+		
+		subject.setMax(8);
+		
+		assert.isFalse(subject.validate('9'));
+		assert.isTrue(subject.validate('8'));
+	});
 });

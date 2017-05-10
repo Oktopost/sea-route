@@ -20,25 +20,30 @@ require('../../../namespace').namespace('SeaRoute.route.utils', function(root) {
 		this.EOP		= false;
 		this.current	= false;
 		
+		var data = query.split('?');
 		
-		var url = query.split('?');
-		var path = url[0];
-		var queryParts = url.length > 1 ? url[1] : '';
+		if (data.length === 1) {
+			data.push({});
+		} else if (data.length > 2) {
+			data = [data[0], data.splice(1).join('?')];
+		}
 		
-		array.forEach(path.split('/'), function (part) {
-			if (part.length > 0) {
-				self.rawParts.push(part);
+		array.forEach(data[0].split('/'), function (pathPart) {
+			if (pathPart.length !== 0) {
+				self.rawParts.push(decodeURI(pathPart));
 			}
 		});
 		
-		array.forEach(queryParts.split('&'), function (queryParam) {
-			var data = queryParam.split('=');
+		array.forEach(data[1].split('&'), function (queryExpression) {
+			var query = queryExpression.split('=');
 			
-			if (data.length !== 2) {
-				return;
+			if (query.length === 1) {
+				query.push('');
+			} else if (query.length > 2) {
+				query = [query[0], query.splice(1).join('?')];
 			}
 			
-			self.rawQuery[data[0]] = decodeURI(data[1]);
+			self.rawQuery[decodeURI(query[0])] = decodeURI(query[1]);
 		});
 		
 		this.EOP		= this.rawParts.length === 0;

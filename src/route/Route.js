@@ -92,7 +92,7 @@ require('../../namespace').namespace('SeaRoute.route', function(root) {
 		
 		if (is(query)) {
 			obj.forEach.pair(query, function (name, value) { 
-				queryParts.push(name + '=' + encodeURI(value))
+				queryParts.push(name + '=' + encodeURIComponent(value))
 			});
 			
 			path += '?' + queryParts.join('&');

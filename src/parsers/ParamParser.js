@@ -21,10 +21,11 @@ require('../../namespace').namespace('SeaRoute.parsers', function(root) {
 			TYPE:			'type'
 		},
 		
-		TYPES: { 
+		TYPES: {
 			INT:		'int',
 			ARRAY:		'array',
 			REGEX:		'regex',
+			JSON:		'json',
 			WILDCARD:	'wildcard'
 		},
 		
@@ -32,6 +33,7 @@ require('../../namespace').namespace('SeaRoute.parsers', function(root) {
 			'int': 			'_createIntParam',
 			'array': 		'_createOneOfParam',
 			'regex': 		'_createRegexParam',
+			'json': 		'_createJsonParam',
 			'wildcard': 	'_createWildcardParam',
 		},
 		
@@ -64,6 +66,10 @@ require('../../namespace').namespace('SeaRoute.parsers', function(root) {
 			}
 			
 			return new params.RegexParam(name, config.regex);
+		},
+		
+		_createJsonParam: function (name, config) {
+			return new params.JsonParam(name);
 		},
 		
 		_createWildcardParam: function (name, config) {

@@ -21,9 +21,9 @@ require('../../namespace').namespace('SeaRoute.params', function(root) {
 		Param.call(this, name);
 		
 		
+		this.setDefaultValue(param.defaultValue());
 		this.setIsAutoFillURL(param.isAutoFillURL());
 		this.setIsOptional(param.isOptional());
-		this.setDefaultValue(param.defaultValue());
 		
 		
 		this.validate	= param.validate;

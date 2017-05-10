@@ -4,6 +4,10 @@
 const Namespace = require('oktopost-namespace');
 
 
+var a = require('oktopost-plankton');
+var b = require('oktopost-plankton-url');
+
+
 const container = {
 	Plankton: 	require('oktopost-plankton'),
 	Classy:		require('oktopost-classy')
