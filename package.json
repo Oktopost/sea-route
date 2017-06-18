@@ -1,6 +1,6 @@
 {
   "name": "oktopost-sea-route",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert URL to callback",
   "main": "index.js",
   "scripts": {
@@ -28,9 +28,9 @@
     "coveralls": "2.10.0"
   },
   "dependencies": {
-    "oktopost-classy": "https://github.com/Oktopost/classy.git#900af20",
-    "oktopost-namespace": "https://github.com/Oktopost/namespace.git#32d6f41",
-    "oktopost-plankton": "https://github.com/Oktopost/plankton.git#c600915",
-    "oktopost-plankton-url": "https://github.com/Oktopost/plankton-url.git#ac50b26"
+    "oktopost-classy": "^1.0.2",
+    "oktopost-namespace": "^2.0.0",
+    "oktopost-plankton": "^1.1.0",
+    "oktopost-plankton-url": "^1.1.0"
   }
 }
