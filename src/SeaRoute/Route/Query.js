@@ -1,20 +1,18 @@
-namespace('SeaRoute.Route', function(root) {
-	'use strict';
-	
-	
+namespace('SeaRoute.Route', function(root)
+{
 	var is		= root.Plankton.is;
 	var as		= root.Plankton.as;
-	var obj		= root.Plankton.obj;
-	var array	= root.Plankton.array;
+	var foreach	= root.Plankton.foreach;
 	
 	
 	/**
 	 * @class SeaRoute.Route.Query
 	 * 
 	 * @property {SeaRoute.ParamType.Param[]} 	_params
-	 * @property {boolean}					_isStrict
+	 * @property {boolean}						_isStrict
 	 */
-	var Query = function () {
+	var Query = function ()
+	{
 		this._params = [];
 		this._isStrict = false;
 	};
@@ -26,14 +24,21 @@ namespace('SeaRoute.Route', function(root) {
 	 * @param {*} data
 	 * @return {*}
 	 */
-	Query.prototype._queryToParam = function (query, param, data) {
-		if (!is(query[param.name()])) {
-			if (param.hasDefaultValue()) {
+	Query.prototype._queryToParam = function (query, param, data)
+	{
+		if (!is(query[param.name()]))
+		{
+			if (param.hasDefaultValue())
+			{
 				data[param.name()] = param.defaultValue();
-			} else if (!param.isOptional()) {
+			}
+			else if (!param.isOptional())
+			{
 				throw 'Missing query parameter ' + param.name();
 			}
-		} else {
+		} 
+		else
+		{
 			data[param.name()] = param.extract(query[param.name()]);
 		}
 	};
@@ -42,14 +47,15 @@ namespace('SeaRoute.Route', function(root) {
 	 * @param {*} query
 	 * @return {*}
 	 */
-	Query.prototype._queryToParams = function (query) {
+	Query.prototype._queryToParams = function (query)
+	{
 		var data = {};
 		var self = this;
 		
-		array.forEach(this._params,
-			function (param) {
-				self._queryToParam(query, param, data);
-			});
+		foreach(this._params, function (param)
+		{
+			self._queryToParam(query, param, data);
+		});
 		
 		return data;
 	};
@@ -60,14 +66,21 @@ namespace('SeaRoute.Route', function(root) {
 	 * @param {*} data
 	 * @return {*}
 	 */
-	Query.prototype._paramToQuery = function (values, param, data) {
-		if (!is(values[param.name()])) {
-			if (param.isAutoFillURL()) {
+	Query.prototype._paramToQuery = function (values, param, data)
+	{
+		if (!is(values[param.name()]))
+		{
+			if (param.isAutoFillURL())
+			{
 				data[param.name()] = param.encode(param.defaultValue());
-			} else if (!param.isOptional()) {
+			}
+			else if (!param.isOptional())
+			{
 				throw 'Value of parameter ' + param.name() + ' not passed';
 			}
-		} else {
+		}
+		else
+		{
 			data[param.name()] = param.encode(values[param.name()]);
 		}
 	};
@@ -76,14 +89,15 @@ namespace('SeaRoute.Route', function(root) {
 	 * @param {*} values
 	 * @return {*}
 	 */
-	Query.prototype._paramsToQuery = function (values) {
+	Query.prototype._paramsToQuery = function (values)
+	{
 		var data = {};
 		var self = this;
 		
-		array.forEach(this._params,
-			function (param) {
-				self._paramToQuery(values, param, data);
-			});
+		foreach(this._params, function (param)
+		{
+			self._paramToQuery(values, param, data);
+		});
 		
 		return data;
 	};
@@ -92,21 +106,24 @@ namespace('SeaRoute.Route', function(root) {
 	/**
 	 * @return {boolean}
 	 */
-	Query.prototype.isEmpty = function () {
+	Query.prototype.isEmpty = function ()
+	{
 		return !is(this._params);
 	};
 	
 	/**
 	 * @return {Number}
 	 */
-	Query.prototype.count = function () {
+	Query.prototype.count = function ()
+	{
 		return this._params.length;
 	};
 	
 	/**
 	 * @return {SeaRoute.Route.Query}
 	 */
-	Query.prototype.setStrict = function () {
+	Query.prototype.setStrict = function ()
+	{
 		this._isStrict = true;
 		return this;
 	};
@@ -115,23 +132,28 @@ namespace('SeaRoute.Route', function(root) {
 	 * @param {SeaRoute.ParamType.Param[]|SeaRoute.ParamType.Param} params
 	 * @return {SeaRoute.Route.Query}
 	 */
-	Query.prototype.add = function (params) {
+	Query.prototype.add = function (params)
+	{
 		params = as.array(params);
 		this._params = this._params.concat(params);
 		return this;
 	};
-
-
+	
+	
 	/**
 	 * @param {*} query
 	 * @return {*}
 	 */
-	Query.prototype.parseQuery = function (query) {
+	Query.prototype.parseQuery = function (query)
+	{
 		var data = this._queryToParams(query);
 		
-		if (!this._isStrict) {
-			obj.forEach.pair(query, function(name, value) {
-				if (!data.hasOwnProperty(name)) {
+		if (!this._isStrict)
+		{
+			foreach.pair(query, function(name, value)
+			{
+				if (!data.hasOwnProperty(name))
+				{
 					data[name] = value;
 				}
 			});
@@ -144,18 +166,37 @@ namespace('SeaRoute.Route', function(root) {
 	 * @param {*} query
 	 * @return {*}
 	 */
-	Query.prototype.parseParameters = function (query) {
+	Query.prototype.parseParameters = function (query)
+	{
 		var data = this._paramsToQuery(query);
 		
-		if (this._isStrict) {
-			obj.forEach.key(query, function(name) {
-				if (!data.hasOwnProperty(name)) {
+		if (this._isStrict)
+		{
+			foreach.key(query, function(name)
+			{
+				if (!data.hasOwnProperty(name))
+				{
 					throw 'Parameter named ' + name + ' is not defined';
 				}
 			});
 		}
 		
 		return data;
+	};
+	
+	/**
+	 * @return {[string]}
+	 */
+	Query.prototype.paramNames = function () 
+	{
+		var res = [];
+		
+		foreach(this._params, function (param)
+		{
+			res.push(param.name());
+		});
+		
+		return res;
 	};
 	
 	

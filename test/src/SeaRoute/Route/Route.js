@@ -161,4 +161,39 @@ suite('Route', () => {
 			assert.equal('/', route.buildPath({}));
 		});
 	});
+	
+	suite('paramNames', () => 
+	{
+		test('Empty path and query', () => 
+		{
+			var route = create();
+			
+			assert.deepEqual([], route.paramNames());
+		});
+		
+		test('Have params in path', () => 
+		{
+			var route = createWithAPart(() => {});
+			
+			assert.deepEqual(['a'], route.paramNames());
+		});
+		
+		test('Have query params', () => 
+		{
+			var route = create();
+			
+			route.addQueryParam(new Param('b'));
+			
+			assert.deepEqual(['b'], route.paramNames());
+		});
+		
+		test('Have query and path params', () => 
+		{
+			var route = createWithAPart(() => {});
+			
+			route.addQueryParam(new Param('b'));
+			
+			assert.deepEqual(['a', 'b'], route.paramNames());
+		});
+	});
 });

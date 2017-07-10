@@ -1,9 +1,7 @@
-namespace('SeaRoute.Route', function(root) {
-	'use strict';
-	
-	
+namespace('SeaRoute.Route', function(root)
+{
 	var is		= root.Plankton.is;
-	var array	= root.Plankton.array;
+	var foreach	= root.Plankton.foreach;
 	
 	
 	/**
@@ -14,7 +12,8 @@ namespace('SeaRoute.Route', function(root) {
 	 * @property {string} _path
 	 * @property {SeaRoute.Route.Part[]} _parts
 	 */
-	var Path = function (path) {
+	var Path = function (path)
+	{
 		this._path = path;
 		this._parts = [];
 	};
@@ -26,8 +25,10 @@ namespace('SeaRoute.Route', function(root) {
 	 * @return {boolean}
 	 * @private
 	 */
-	Path.prototype._matchPart = function (part, pathPart) {
-		if (!is(pathPart)) {
+	Path.prototype._matchPart = function (part, pathPart)
+	{
+		if (!is(pathPart))
+		{
 			return part.isOptional();
 		}
 		
@@ -38,14 +39,16 @@ namespace('SeaRoute.Route', function(root) {
 	/**
 	 * @return {string}
 	 */
-	Path.prototype.text = function () {
+	Path.prototype.text = function ()
+	{
 		return this._path;
 	};
 	
 	/**
 	 * @return {SeaRoute.Route.Part[]}
 	 */
-	Path.prototype.parts = function () {
+	Path.prototype.parts = function ()
+	{
 		return this._parts;
 	};
 	
@@ -53,7 +56,8 @@ namespace('SeaRoute.Route', function(root) {
 	 * @param {SeaRoute.Route.Part|SeaRoute.Route.Part[]} part
 	 * @return {SeaRoute.Route.Path}
 	 */
-	Path.prototype.addPart = function (part) {
+	Path.prototype.addPart = function (part)
+	{
 		this._parts.push(part);
 		return this;
 	};
@@ -61,7 +65,8 @@ namespace('SeaRoute.Route', function(root) {
 	/**
 	 * @return {Number}
 	 */
-	Path.prototype.partsCount = function () {
+	Path.prototype.partsCount = function ()
+	{
 		return this._parts.length;
 	};
 	
@@ -70,7 +75,8 @@ namespace('SeaRoute.Route', function(root) {
 	 * @param {string[]} rawPath
 	 * @return {boolean}
 	 */
-	Path.prototype.isMatching = function (rawPath) {
+	Path.prototype.isMatching = function (rawPath)
+	{
 		var length = this.partsCount();
 		
 		if (rawPath.length > length) {
@@ -90,7 +96,8 @@ namespace('SeaRoute.Route', function(root) {
 	 * @param {*} params
 	 * @return {string}
 	 */
-	Path.prototype.encode = function (params) {
+	Path.prototype.encode = function (params)
+	{
 		var rawPath = [];
 		var optional = [];
 		var length = this.partsCount();
@@ -149,15 +156,35 @@ namespace('SeaRoute.Route', function(root) {
 	 * @param {string[]} rawPath
 	 * @return {*}
 	 */
-	Path.prototype.extract = function (rawPath) {
+	Path.prototype.extract = function (rawPath)
+	{
 		var params = {};
 		var length = this.partsCount();
 		
-		for (var index = 0; index < length; index++) {
+		for (var index = 0; index < length; index++)
+		{
 			this._parts[index].extract(rawPath[index], params);
 		}
 		
 		return params;
+	};
+	
+	/**
+	 * @return {[string]}
+	 */
+	Path.prototype.paramNames = function ()
+	{
+		var res = [];
+		
+		foreach(this._parts, function (part) 
+		{
+			if (!part.isConst())
+			{
+				res.push(part.getParamName());
+			}
+		});
+		
+		return res;
 	};
 	
 	
