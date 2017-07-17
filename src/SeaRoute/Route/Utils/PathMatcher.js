@@ -52,7 +52,7 @@ namespace('SeaRoute.Route.Utils', function(root) {
 		matchArray: function (set, cursor) {
 			var result = false;
 			
-			array.forEach(set, (value) => {
+			array.forEach(set, function (value) {
 				if (PathMatcher.matchElement(value, cursor)) {
 					result = true;
 					return false;
