@@ -297,7 +297,6 @@ suite('Router', () => {
 					callback:() => {}
 				},
 				'/a/4/test/{prm|[pre_def]}': {
-					callback:(p) => { paramsA4Test = p; }
 				},
 				'/a/4/test/Post': {
 					callback:() => {}
