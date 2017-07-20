@@ -27,7 +27,7 @@ a set of callbacks that are used for parameter validation, parsing and encoding.
 
 Parameter validation is divided into 3 operations:
 1. **Validation**: Validate that the string value passed from the URL matches a set of given rules.
-2. **Parsing**: Convert the url parameter from sting into a value that will be passed to the route handler. 
+2. **Parsing**: Convert the url parameter from string into a value that will be passed to the route handler. 
 This action is called only if the validation was successful.
 3. **Encoding**: Convert a variable to it's string representation that can be used in a redirect link. 
 This operation is invoked when a redirect is requested from JavaScript and not when parsing current URL.

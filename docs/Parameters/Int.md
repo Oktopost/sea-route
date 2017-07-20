@@ -1,6 +1,6 @@
 # Integer Parameter
 
-The url parameter must be any string that can be parsed by javascript as a number.
+The URL parameter must be any string that can be parsed by JavaScript as a number.
 
 
 **Definition**
@@ -28,7 +28,7 @@ parameter **A** in URL URL https://..../home?**A=32.64** will be equal to 33.
 Non standard representations of integer like **0x10** and **12e4** will also be accepted.
 
 
-**Object Literal Definition**
+**Configuration Example**
 ```javascript
 router.appendRoutes({
 	// ...

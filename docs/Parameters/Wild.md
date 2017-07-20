@@ -26,7 +26,7 @@ inside this expression, that are also used by regex, may cause side effects. It'
 for a simple expressions, like prefix/suffix validation. For example `target: '*/path/*'`.
 
 
-**Path Definition**
+**Path Configuration Example**
 
 ```javascript
 router.appendRoutes({
@@ -38,7 +38,7 @@ router.appendRoutes({
 In this example, the path parameter **by** must start with `'name_'`.
 
 
-**Object Literal Definition**
+**Configuration Example**
 
 ```javascript
 router.appendRoutes({

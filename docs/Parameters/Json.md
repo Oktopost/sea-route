@@ -31,7 +31,7 @@ Any valid json string is acceptable. That includes:
 The result of [JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON).parse is the value that is passed to the callback.
 
 
-**Object Literal Definition**
+**Configuration Example**
 
 ```javascript
 router.appendRoutes({

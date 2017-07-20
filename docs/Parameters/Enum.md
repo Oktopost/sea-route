@@ -26,7 +26,7 @@ The array of values should contain only strings. Any other value will never matc
 Passing an empty data set will result in an exception.
 
 
-**Path Definition**
+**Path Configuration Example**
 
 ```javascript
 router.appendRoutes({
@@ -38,7 +38,7 @@ router.appendRoutes({
 In this example, the path parameter **by** must be `'name'`, `'age'` or `'date'`.
 
 
-**Object Literal Definition**
+**Configuration Example**
 
 ```javascript
 router.appendRoutes({

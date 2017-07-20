@@ -25,7 +25,7 @@ This validator does not support capture groups. As long as the URL parameter mat
 parameter is passed to the route handler.
 
 
-**Path Definition**
+**Path Configuration Example**
 
 ```javascript
 router.appendRoutes({
@@ -40,7 +40,7 @@ Also note that the string must start and end with '/', otherwise it will
 be treated as a [Wildcard Parameter](./Wild.md).
 
 
-**Object Literal Definition**
+**Configuration Example**
 
 ```javascript
 router.appendRoutes({
