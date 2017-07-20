@@ -1,7 +1,5 @@
-namespace('SeaRoute.ParamType', function(root) {
-	'use strict';
-	
-	
+namespace('SeaRoute.ParamType', function(root)
+{
 	var RegexParam	= root.SeaRoute.ParamType.RegexParam;
 	
 	
@@ -12,7 +10,8 @@ namespace('SeaRoute.ParamType', function(root) {
 	 * @param {string} name
 	 * @param {string} expression
 	 */
-	var WildcardParam = function(name, expression) {
+	var WildcardParam = function(name, expression)
+	{
 		RegexParam.call(this, name, new RegExp('^' + expression.replace('*', '.*') + '$'));
 	};
 	

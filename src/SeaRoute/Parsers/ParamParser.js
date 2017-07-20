@@ -43,8 +43,10 @@ namespace('SeaRoute.Parsers', function(root)
 			'num': 			'_createNumberParam',
 			'number':		'_createNumberParam',
 			
-			'int': 			'_createIntParam',
+			'enum': 		'_createOneOfParam',
 			'array': 		'_createOneOfParam',
+			
+			'int': 			'_createIntParam',
 			'regex': 		'_createRegexParam',
 			'json': 		'_createJsonParam',
 			
@@ -79,7 +81,7 @@ namespace('SeaRoute.Parsers', function(root)
 		
 		_createOneOfParam: function (name, config)
 		{
-			if (!is.array(config.values))
+			if (!is.array.notEmpty(config.values))
 			{
 				throw new Error('The config "values" is required for param of type "array" and must be an Array of strings'); 
 			}

@@ -162,7 +162,13 @@ suite('ParamParser', () =>
 		
 		test('array', () =>
 		{
-			var obj = ParamParser.parse('a', { type: 'array', values: [] });
+			var obj = ParamParser.parse('a', { type: 'array', values: ['a'] });
+			assert.instanceOf(obj, OneOfParam);
+		});
+		
+		test('array as enum', () =>
+		{
+			var obj = ParamParser.parse('a', { type: 'enum', values: ['a'] });
 			assert.instanceOf(obj, OneOfParam);
 		});
 		
@@ -237,6 +243,11 @@ suite('ParamParser', () =>
 		test('No data set, throw error', () =>
 		{
 			assert.throws(() => { ParamParser.parse('a', { type: 'array' }); });
+		});
+		
+		test('Empty data set, throw error', () =>
+		{
+			assert.throws(() => { ParamParser.parse('a', { type: 'array', values: [] }); });
 		});
 		
 		test('Data not array, throw error', () =>

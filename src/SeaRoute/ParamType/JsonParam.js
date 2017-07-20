@@ -1,6 +1,5 @@
-namespace('SeaRoute.ParamType', function(root) {
-	'use strict';
-	
+namespace('SeaRoute.ParamType', function(root)
+{
 	var is		= root.Plankton.is;
 	var Param	= root.SeaRoute.ParamType.Param;
 	
@@ -13,7 +12,8 @@ namespace('SeaRoute.ParamType', function(root) {
 	 * 
 	 * @property {RegExp} _regex
 	 */
-	var JsonParam = function(name) {
+	var JsonParam = function(name)
+	{
 		Param.call(this, name);
 	};
 	
@@ -26,7 +26,8 @@ namespace('SeaRoute.ParamType', function(root) {
 	 * @param {string} data
 	 * @return {boolean}
 	 */
-	JsonParam.prototype.validate = function (data) {
+	JsonParam.prototype.validate = function (data)
+	{
 		return is.json(data);
 	};
 	
@@ -34,7 +35,8 @@ namespace('SeaRoute.ParamType', function(root) {
 	 * @param {string} data
 	 * @return {string}
 	 */
-	JsonParam.prototype.encode = function (data) {
+	JsonParam.prototype.encode = function (data)
+	{
 		return JSON.stringify(data);
 	};
 	
@@ -42,7 +44,8 @@ namespace('SeaRoute.ParamType', function(root) {
 	 * @param {string} data
 	 * @return {string}
 	 */
-	JsonParam.prototype.extract = function (data) {
+	JsonParam.prototype.extract = function (data)
+	{
 		return JSON.parse(data);
 	};
 	

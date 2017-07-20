@@ -1,7 +1,5 @@
-namespace('SeaRoute.ParamType', function(root) {
-	'use strict';
-	
-	
+namespace('SeaRoute.ParamType', function(root)
+{
 	var Param	= root.SeaRoute.ParamType.Param;
 	
 	
@@ -14,7 +12,8 @@ namespace('SeaRoute.ParamType', function(root) {
 	 * 
 	 * @property {RegExp} _regex
 	 */
-	var RegexParam = function(name, regex) {
+	var RegexParam = function(name, regex)
+	{
 		Param.call(this, name);
 		
 		this._regex = regex;
@@ -29,7 +28,8 @@ namespace('SeaRoute.ParamType', function(root) {
 	 * @param {string} data
 	 * @return {boolean}
 	 */
-	RegexParam.prototype.validate = function (data) {
+	RegexParam.prototype.validate = function (data)
+	{
 		return this._regex.test(data);
 	};
 	
@@ -37,7 +37,8 @@ namespace('SeaRoute.ParamType', function(root) {
 	 * @param {string} data
 	 * @return {string}
 	 */
-	RegexParam.prototype.encode = function (data) {
+	RegexParam.prototype.encode = function (data)
+	{
 		data = data.toString();
 		
 		if (!this._regex.test(data)) {
@@ -51,7 +52,8 @@ namespace('SeaRoute.ParamType', function(root) {
 	 * @param {string} data
 	 * @return {string}
 	 */
-	RegexParam.prototype.extract = function (data) {
+	RegexParam.prototype.extract = function (data)
+	{
 		return data;
 	};
 	
