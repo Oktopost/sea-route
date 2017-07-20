@@ -5,7 +5,7 @@ namespace('SeaRoute.ParamType', function(root)
 	
 	
 	/**
-	 * @class SeaRoute.ParamType.IntParam
+	 * @class SeaRoute.ParamType.NumberParam
 	 * @extends SeaRoute.ParamType.Param
 	 * 
 	 * @param {string} name
@@ -15,7 +15,7 @@ namespace('SeaRoute.ParamType', function(root)
 	 * @property {number} _min
 	 * @property {number} _max
 	 */
-	var IntParam = function(name, min, max)
+	var NumberParam = function(name, min, max)
 	{
 		Param.call(this, name);
 		
@@ -24,14 +24,14 @@ namespace('SeaRoute.ParamType', function(root)
 	};
 	
 	
-	IntParam.prototype = Object.create(Param.prototype);
-	IntParam.prototype.constructor = IntParam;
+	NumberParam.prototype = Object.create(Param.prototype);
+	NumberParam.prototype.constructor = NumberParam;
 
 	/**
 	 * @param {Number} min
-	 * @return {SeaRoute.ParamType.IntParam}
+	 * @return {SeaRoute.ParamType.NumberParam}
 	 */
-	IntParam.prototype.setMin = function (min)
+	NumberParam.prototype.setMin = function (min)
 	{
 		this._min = min;
 		return this;
@@ -39,9 +39,9 @@ namespace('SeaRoute.ParamType', function(root)
 
 	/**
 	 * @param {Number} max
-	 * @return {SeaRoute.ParamType.IntParam}
+	 * @return {SeaRoute.ParamType.NumberParam}
 	 */
-	IntParam.prototype.setMax = function (max)
+	NumberParam.prototype.setMax = function (max)
 	{
 		this._max = max;
 		return this;
@@ -52,45 +52,38 @@ namespace('SeaRoute.ParamType', function(root)
 	 * @param {string} data
 	 * @return {boolean}
 	 */
-	IntParam.prototype.validate = function (data)
+	NumberParam.prototype.validate = function (data)
 	{
 		var value = parseFloat(data);
-		
-		if (is.NaN(value))
-		{
-			return false;
-		}
-		
-		return (value >= this._min && value <= this._max);
+		return (!is.NaN(value) && value >= this._min && value <= this._max);
 	};
 	
 	/**
 	 * @param {*} data
 	 * @return {string}
 	 */
-	IntParam.prototype.encode = function (data)
+	NumberParam.prototype.encode = function (data)
 	{
 		if (!is.number(data))
 		{
 			data = parseFloat(data.toString());
 			
-			if (is.NaN(data)) {
-				throw new Error("Invalid parameter provided for " + this.name());
-			}
+			if (is.NaN(data))
+				throw new Error('Invalid parameter provided for ' + this.name());
 		}
 		
-		return Math.round(data).toString();
+		return data.toString();
 	};
 	
 	/**
 	 * @param {string} data
 	 * @return {Number}
 	 */
-	IntParam.prototype.extract = function (data)
+	NumberParam.prototype.extract = function (data)
 	{
-		return Math.round(parseFloat(data));
+		return parseFloat(data);
 	};
 	
 	
-	this.IntParam = IntParam;
+	this.NumberParam = NumberParam;
 });

@@ -1,6 +1,3 @@
-'use strict';
-
-
 const SeaRoute = require('../../index');
 
 
@@ -13,9 +10,12 @@ const Router	= SeaRoute.Router;
 const assert = require('chai').assert;
 
 
-suite('Router', () => {
-	suite('handle', () => {
-		test('Empty router - miss called', () => {
+suite('Router', () =>
+{
+	suite('handle', () =>
+	{
+		test('Empty router - miss called', () =>
+		{
 			var isCalled = false;
 			var subject = new Router(() => {}, (url) => { isCalled = true; });
 			
@@ -24,7 +24,8 @@ suite('Router', () => {
 			assert.isTrue(isCalled);
 		});
 		
-		test('On miss url passed to miss handler', () => {
+		test('On miss url passed to miss handler', () =>
+		{
 			var calledUrl = false;
 			var subject = new Router(() => {}, (url) => { calledUrl = url; });
 			
@@ -33,7 +34,8 @@ suite('Router', () => {
 			assert.equal('/a', calledUrl);
 		});
 		
-		test('On miss url passed to miss handler', () => {
+		test('On miss url passed to miss handler', () =>
+		{
 			var calledUrl = false;
 			var subject = new Router(() => {}, (url) => { calledUrl = url; });
 			
@@ -42,7 +44,8 @@ suite('Router', () => {
 			assert.equal('/a', calledUrl);
 		});
 		
-		test('On miss without miss handler, error thrown', () => {
+		test('On miss without miss handler, error thrown', () =>
+		{
 			var subject = new Router(() => {});
 			
 			assert.throws(() => { subject.handle('/a'); });
@@ -243,62 +246,82 @@ suite('Router', () => {
 	});
 	
 	
-	suite('SANITY', () => {
-		test('handle', () => {
+	suite('SANITY', () =>
+	{
+		test('handle', () =>
+		{
 			var paramsAB = false;
 			var paramsCD = false;
 			var paramsA4Test = false;
 			var subject = new Router(() => {});
 			
-			subject.addParams({
-				pre_def: {
+			subject.addParams(
+			{
+				pre_def:
+				{
 					type: 'int'
 				}
 			});
 			
-			subject.appendRoutes({
-				'/a': {
+			subject.appendRoutes(
+			{
+				'/a': 
+				{
 					callback: () => {}
 				},
-				'/{b}': {
-					params:	{ 
+				'/{b}': 
+				{
+					params:
+					{ 
 						b: { type: 'int' }
 					}, 
 					
 					callback: () => {}
 				},
-				'/{c}/{d}': {
-					params:	{ 
+				'/{c}/{d}': 
+				{
+					params:	
+					{ 
 						c: /b/i,
 						d: { optional: true	}
 					},
 					callback:(p) => { paramsCD = p; }
 				},
-				'/a/1': {
+				'/a/1': 
+				{
 					callback:() => {}
 				},
-				'/a/2': {
+				'/a/2': 
+				{
 					callback:() => {}
 				},
-				'/a/{b}': {
+				'/a/{b}': 
+				{
 					params: { b: /[a-z]*/i },
 					callback:(p) => { paramsAB = p; }
 				},
-				'/a/4/test/1': {
+				'/a/4/test/1': 
+				{
 					callback:(p) => {}
 				},
-				'/a/4/test/2': {
+				'/a/4/test/2':
+				{
 					callback:(p) => {}
 				},
-				'/a/4': {
+				'/a/4':
+				{
 					callback:(p) => {}
 				},
-				'/a/4/test/Pre': {
+				'/a/4/test/Pre': 
+				{
 					callback:() => {}
 				},
-				'/a/4/test/{prm|[pre_def]}': {
+				'/a/4/test/{prm|[pre_def]}': 
+				{
+					callback:(p) => { paramsA4Test = p; }
 				},
-				'/a/4/test/Post': {
+				'/a/4/test/Post': 
+				{
 					callback:() => {}
 				},
 				

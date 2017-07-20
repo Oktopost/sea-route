@@ -37,10 +37,15 @@ namespace('SeaRoute.Parsers', function(root) {
 		},
 		
 		CREATORS: {
+			'num': 			'_createIntParam',
+			'number':		'_createIntParam',
+			
 			'int': 			'_createIntParam',
 			'array': 		'_createOneOfParam',
 			'regex': 		'_createRegexParam',
 			'json': 		'_createJsonParam',
+			
+			'wild': 		'_createWildcardParam',
 			'wildcard': 	'_createWildcardParam',
 		},
 		
@@ -132,7 +137,7 @@ namespace('SeaRoute.Parsers', function(root) {
 				return this._createByType(name, config);
 			}
 		},
-
+		
 		/**
 		 * @param {SeaRoute.ParamType.Param} prm
 		 * @param {object} config
