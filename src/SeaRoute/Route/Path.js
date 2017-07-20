@@ -103,44 +103,54 @@ namespace('SeaRoute.Route', function(root)
 		var length = this.partsCount();
 		var canHaveMoreParams = true;
 		
-		for (var index = 0; index < length; index++) {
+		for (var index = 0; index < length; index++)
+		{
 			var value		= undefined;
 			var part		= this._parts[index];
 			var paramObj	= part.getParam();
 			
-			if (part.isConst()) {
+			if (part.isConst())
+			{
 				value = part.text();
-			
+			}
 			// If part is a parameter and there is passed parameter for the url, encode it.
-			} else if (is.defined(params[part.getParamName()])) {
+			else if (is.defined(params[part.getParamName()]))
+			{
 				value = part.encode(params[part.getParamName()]);
-				
-			// IF the parameter is AutoFill, always add it's value.
-			} else if (paramObj.isAutoFillURL()) {
+			}
+			// If the parameter is AutoFill, always add it's value.
+			else if (paramObj.isAutoFillURL())
+			{
 				value = part.encode(paramObj.defaultValue());
-				
+			}
 			// If the parameter has a default value (means it also optional) add it's value only if more 
 			// parameters later in the chain are passed.
-			} else if (paramObj.hasDefaultValue()) {
+			else if (paramObj.hasDefaultValue())
+			{
 				optional.push(encodeURIComponent(part.encode(paramObj.defaultValue())));
-			
+			}
 			// If the parameter is optional but was not provided and default value is not set: 
 			// No more parameters can be added to the path.
-			} else if (paramObj.isOptional()) {
-				canHaveMoreParams = false;
-				
+			else if (paramObj.isOptional())
+			{
+				canHaveMoreParams = false;	
+			}
 			// Else, the parameter is required.
-			} else {
+			else
+			{
 				throw new Error('Parameter ' + paramObj.name() + ' is required for the path ' + this._path);
 			}
 			
-			if (is(value)) {
-				if (!canHaveMoreParams) {
+			if (is(value))
+			{
+				if (!canHaveMoreParams)
+				{
 					throw new Error('Optional parameter must be set if ' + paramObj.name() + ' is provided. ' + 
 						'Set ' + paramObj.name() + ' or provide a default value for it');
 				}
 				
-				if (is(optional)) {
+				if (is(optional))
+				{
 					rawPath = rawPath.concat(optional);
 					optional = [];
 				}

@@ -1,7 +1,5 @@
-namespace('SeaRoute.ParamType', function(root) {
-	'use strict';
-	
-	
+namespace('SeaRoute.ParamType', function(root)
+{
 	var Param = root.SeaRoute.ParamType.Param;
 	
 	var is	= root.Plankton.is;
@@ -17,7 +15,8 @@ namespace('SeaRoute.ParamType', function(root) {
 	 * @property {string} _name
 	 * @property {SeaRoute.ParamType.Param} _original
 	 */
-	var PredefinedParamDecorator = function(name, param) {
+	var PredefinedParamDecorator = function(name, param)
+	{
 		Param.call(this, name);
 		
 		

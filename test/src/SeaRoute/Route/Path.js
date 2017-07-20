@@ -6,6 +6,7 @@ const SeaRoute = require('../../../index');
 const Path = SeaRoute.Route.Path;
 const Part = SeaRoute.Route.Part;
 const Param = SeaRoute.ParamType.Param;
+const FlagParam = SeaRoute.ParamType.FlagParam;
 const CallbackParam = SeaRoute.ParamType.CallbackParam;
 
 const assert = require('chai').assert;
@@ -244,22 +245,20 @@ suite('Path', () =>
 			assert.equal('/a/abc', path.encode({}));
 		});
 		
-		test('AutoFill part before const part', () =>
+		test('FlagParam part before const part, parameter name used', () =>
 		{
-			var path = new Path('/a/b');
+			var path = new Path('/{?a}/b');
 			
-			var part1 = new Part('a');
+			var part1 = new Part('{?a}');
 			var part2 = new Part('b');
 			
-			var param1 = new Param('n');
-			param1.setDefaultValue('abc');
-			param1.setIsAutoFillURL(true);
+			var param1 = new FlagParam('a');
 			part1.setParam(param1);
 			
 			path.addPart(part1);
 			path.addPart(part2);
 			
-			assert.equal('/abc/b', path.encode({}));
+			assert.equal('/a/b', path.encode({}));
 		});
 		
 		test('Part with default value at end, part not appended', () =>

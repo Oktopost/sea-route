@@ -253,6 +253,7 @@ suite('Router', () =>
 			var paramsAB = false;
 			var paramsCD = false;
 			var paramsA4Test = false;
+			var paramsA5 = false;
 			var subject = new Router(() => {});
 			
 			subject.addParams(
@@ -324,6 +325,10 @@ suite('Router', () =>
 				{
 					callback:() => {}
 				},
+				'/a/5/n/{?flag}': 
+				{
+					callback:(p) => { paramsA5 = p; }
+				},
 				
 			});
 			
@@ -335,6 +340,13 @@ suite('Router', () =>
 			
 			subject.handle('/a/4/test/123');
 			assert.deepEqual({prm: 123}, paramsA4Test);
+			
+			
+			subject.handle('/a/5/n');
+			assert.deepEqual({flag: false}, paramsA5);
+			
+			subject.handle('/a/5/n/flag');
+			assert.deepEqual({flag: true}, paramsA5);
 		});
 	});
 });

@@ -4,6 +4,8 @@ namespace('SeaRoute.Parsers', function(root)
 	var array		= root.Plankton.array;
 	var classify	= root.Classy.classify;
 	
+	var FlagParam	= root.SeaRoute.ParamType.FlagParam;
+	
 	
 	/**
 	 * @name SeaRoute.Parsers.PathParser
@@ -53,6 +55,16 @@ namespace('SeaRoute.Parsers', function(root)
 			{
 				config[name] = {};
 			}
+		},
+
+		/**
+		 * @param {string} name
+		 * @param {{}} config
+		 * @private
+		 */
+		_flagParameter: function (name, config)
+		{
+			config[name] = new FlagParam(name);
 		},
 
 		/**
@@ -155,11 +167,23 @@ namespace('SeaRoute.Parsers', function(root)
 			var name;
 			var value;
 			
+			if (param[0] === '?')
+			{
+				if (param.length === 1)
+					throw new Error('Parameter name not provided');	
+				
+				this._flagParameter(param.substr(1), config);
+				return;
+			}
+			
 			// Simple parameter
-			if (pipelineIndex === -1) {
+			if (pipelineIndex === -1)
+			{
 				this._simpleParam(param, config);
 				return;
-			} else if (pipelineIndex === param.length - 1 && pipelineIndex > 0) {
+			}
+			else if (pipelineIndex === param.length - 1 && pipelineIndex > 0)
+			{
 				this._simpleParam(param.substr(0, param.length - 1), config);
 				return;
 			}

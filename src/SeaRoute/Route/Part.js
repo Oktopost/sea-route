@@ -11,7 +11,8 @@ namespace('SeaRoute.Route', function(root)
 	 * @property {string} _text
 	 * @property {SeaRoute.ParamType.Param} _param
 	 */
-	var Part = function(text) {
+	var Part = function(text)
+	{
 		this._text		= text;
 		this._param		= null;
 	};
@@ -20,21 +21,24 @@ namespace('SeaRoute.Route', function(root)
 	/**
 	 * @return {string}
 	 */
-	Part.prototype.text = function () {
+	Part.prototype.text = function ()
+	{
 		return this._text;
 	};
 
 	/**
 	 * @return {boolean}
 	 */
-	Part.prototype.isConst = function () {
+	Part.prototype.isConst = function ()
+	{
 		return is.null(this._param);
 	};
 
 	/**
 	 * @param {SeaRoute.ParamType.Param} param
 	 */
-	Part.prototype.setParam = function (param) {
+	Part.prototype.setParam = function (param)
+	{
 		this._param = param;
 		return this;
 	};
@@ -42,24 +46,26 @@ namespace('SeaRoute.Route', function(root)
 	/**
 	 * @return {SeaRoute.ParamType.Param}
 	 */
-	Part.prototype.getParam = function () {
+	Part.prototype.getParam = function ()
+	{
 		return this._param;
 	};
 
 	/**
 	 * @return {string}
 	 */
-	Part.prototype.getParamName = function () {
+	Part.prototype.getParamName = function ()
+	{
 		return this._param.name();
 	};
 
 	/**
 	 * @return {boolean}
 	 */
-	Part.prototype.isOptional = function () {
-		if (this.isConst()) {
+	Part.prototype.isOptional = function ()
+	{
+		if (this.isConst())
 			return false;
-		}
 		
 		return this._param.isOptional();
 	};
@@ -69,10 +75,14 @@ namespace('SeaRoute.Route', function(root)
 	 * @param {string} data
 	 * @return {boolean}
 	 */
-	Part.prototype.validate = function (data) {
-		if (this.isConst()) {
+	Part.prototype.validate = function (data)
+	{
+		if (this.isConst())
+		{
 			return (data === this._text);
-		} else {
+		}
+		else
+		{
 			return this._param.validate(data);
 		}
 	};
@@ -81,10 +91,14 @@ namespace('SeaRoute.Route', function(root)
 	 * @param {*} param
 	 * @return {string}
 	 */
-	Part.prototype.encode = function (param) {
-		if (this.isConst()) {
+	Part.prototype.encode = function (param)
+	{
+		if (this.isConst())
+		{
 			return this._text;
-		} else {
+		}
+		else
+		{
 			return this._param.encode(param);
 		}
 	};
@@ -93,8 +107,10 @@ namespace('SeaRoute.Route', function(root)
 	 * @param {string} data
 	 * @param {*} params
 	 */
-	Part.prototype.extract = function (data, params) {
-		if (!this.isConst()) {
+	Part.prototype.extract = function (data, params)
+	{
+		if (!this.isConst())
+		{
 			params[this._param.name()] = this._param.extract(data);
 		}
 	};

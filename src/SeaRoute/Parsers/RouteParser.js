@@ -63,12 +63,22 @@ namespace('SeaRoute.Parsers', function(root, SeaRoute) {
 					index			= str.indexOf('}');
 					name			= str.substr(0, index + 1);
 					
-					if (pipelineIndex >= 0 && pipelineIndex < index) {
+					if (pipelineIndex >= 0 && pipelineIndex < index)
+					{
 						paramName = str.substr(1, pipelineIndex - 1);
-					} else if (index !== -1) {
+					}
+					else if (index !== -1)
+					{
 						paramName = str.substr(1, index - 1);
-					} else {
+					}
+					else
+					{
 						throw new Error('Invalid path defined: ' + config.path.toString());
+					}
+					
+					if (paramName[0] === '?') 
+					{
+						paramName = paramName.substr(1);	
 					}
 					
 					part = new Part(name);

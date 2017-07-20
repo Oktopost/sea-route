@@ -14,7 +14,8 @@ namespace('SeaRoute.ParamType', function(root)
 	 * @property {boolean}	_isAutoFillURL
 	 * @property {*}		_defaultValue
 	 */
-	var Param = function(name) {
+	var Param = function(name)
+	{
 		this._name			= name;
 		this._isOptional	= false;
 		this._isAutoFillURL	= false;
@@ -27,35 +28,40 @@ namespace('SeaRoute.ParamType', function(root)
 	/**
 	 * @return {string}
 	 */
-	Param.prototype.name = function () {
+	Param.prototype.name = function ()
+	{
 		return this._name;
 	};
 
 	/**
 	 * @return {*}
 	 */
-	Param.prototype.defaultValue = function () {
+	Param.prototype.defaultValue = function ()
+	{
 		return this._isOptional ? this._defaultValue : undefined;
 	};
 
 	/**
 	 * @return {boolean}
 	 */
-	Param.prototype.hasDefaultValue = function() {
+	Param.prototype.hasDefaultValue = function()
+	{
 		return this._isOptional && is.defined(this._defaultValue);
 	};
 	
 	/**
 	 * @return {boolean}
 	 */
-	Param.prototype.isOptional = function () {
+	Param.prototype.isOptional = function ()
+	{
 		return this._isOptional;
 	};
 
 	/**
 	 * @return {boolean}
 	 */
-	Param.prototype.isAutoFillURL = function () {
+	Param.prototype.isAutoFillURL = function ()
+	{
 		return this.hasDefaultValue() && this._isAutoFillURL;
 	};
 	
@@ -64,7 +70,8 @@ namespace('SeaRoute.ParamType', function(root)
 	 * @param {*} value
 	 * @return {SeaRoute.ParamType.Param}
 	 */
-	Param.prototype.setDefaultValue = function (value) {
+	Param.prototype.setDefaultValue = function (value)
+	{
 		this._isOptional = true;
 		this._defaultValue = value;
 		return this;
@@ -74,7 +81,8 @@ namespace('SeaRoute.ParamType', function(root)
 	 * @param {boolean} isOptional
 	 * @return {SeaRoute.ParamType.Param}
 	 */
-	Param.prototype.setIsOptional = function (isOptional) {
+	Param.prototype.setIsOptional = function (isOptional)
+	{
 		this._isOptional = isOptional;
 		return this;
 	};
@@ -83,17 +91,18 @@ namespace('SeaRoute.ParamType', function(root)
 	 * @param {boolean} isAutoFillURL
 	 * @return {SeaRoute.ParamType.Param}
 	 */
-	Param.prototype.setIsAutoFillURL = function (isAutoFillURL) {
+	Param.prototype.setIsAutoFillURL = function (isAutoFillURL)
+	{
 		this._isAutoFillURL = isAutoFillURL;
 		return this;
 	};
 	
 	
 	/**
-	 * @param {string} data
 	 * @return {boolean}
 	 */
-	Param.prototype.validate = function (data) {
+	Param.prototype.validate = function ()
+	{
 		return true;
 	};
 	
@@ -101,7 +110,8 @@ namespace('SeaRoute.ParamType', function(root)
 	 * @param {*} data
 	 * @return {string}
 	 */
-	Param.prototype.encode = function (data) {
+	Param.prototype.encode = function (data)
+	{
 		return data.toString();
 	};
 	
@@ -109,7 +119,8 @@ namespace('SeaRoute.ParamType', function(root)
 	 * @param {string} data
 	 * @return {*}
 	 */
-	Param.prototype.extract = function (data) {
+	Param.prototype.extract = function (data)
+	{
 		return data;
 	};
 	
