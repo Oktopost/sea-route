@@ -1,4 +1,4 @@
-# Integer Parameter
+# Number Parameter
 
 The URL parameter must be any string that can be parsed by JavaScript as a number.
 

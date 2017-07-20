@@ -1,6 +1,6 @@
 # Wildcard Parameter
 
-The url parameter must be match a simple wildcard expression. 
+The URL parameter must be match a simple wildcard expression. 
 
 
 **Definition**

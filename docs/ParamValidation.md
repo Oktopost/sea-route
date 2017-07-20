@@ -11,7 +11,7 @@
 | --- | --- |
 | [Integer](./Parameters/Int.md)|Accept any integer numbers (float numbers are rounded). |
 | [Number](./Parameters/Number.md)|Accept any number; float or integer. |
-| [Json](./Parameters/Json.md)|Accept a valid json string only. Note that 'null', '""', '0' and so on are also valid json strings. | 
+| [Json](./Parameters/Json.md)|Accept a valid json string only. | 
 | [Enum](./Parameters/Enum.md)|The input parameter must match one of the values in a predefined array. |
 | [Wildcard](./Parameters/Wild.md)|The input must match a simple wildcard expression. |
 | [Regex](./Parameters/Regex.md)|The input must match a regular expression. |

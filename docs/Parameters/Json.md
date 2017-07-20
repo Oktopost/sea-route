@@ -1,6 +1,6 @@
 # Json Parameter
 
-The url parameter must be a valid json string.
+The URL parameter must be a valid json string.
 
 
 **Definition**
@@ -28,7 +28,7 @@ Any valid json string is acceptable. That includes:
 * `{"a": 123}` - Object literal
 * `[1, 2, 'c']` - Array
 
-The result of [JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON).parse is the value that is passed to the callback.
+The result of [JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON).parse() is the value that is passed to the callback.
 
 
 **Configuration Example**

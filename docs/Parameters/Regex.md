@@ -1,6 +1,6 @@
 # Regex Parameter
 
-The url parameter must be match a regular expression. 
+The URL parameter must be match a regular expression. 
 
 
 **Definition**

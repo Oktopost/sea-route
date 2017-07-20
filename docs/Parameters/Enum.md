@@ -1,6 +1,6 @@
 # Integer Parameter
 
-The url parameter must be match one of the values in a predefined set. 
+The URL parameter must be match one of the values in a predefined set. 
 
 
 **Definition**
