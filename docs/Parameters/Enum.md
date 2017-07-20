@@ -41,6 +41,7 @@ In this example, the path parameter **by** must be `'name'`, `'age'` or `'date'`
 **Configuration Example**
 
 ```javascript
+// Long notation
 router.appendRoutes({
 	// ...
 	params:
@@ -51,6 +52,15 @@ router.appendRoutes({
 			type:	'enum',
 			values: ['name', 'age', 'date'] 
 		}
+	}, 
+});
+
+// Short notation
+router.appendRoutes({
+	// ...
+	params:
+	{
+		by: ['name', 'age', 'date']
 	}, 
 });
 ```

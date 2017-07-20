@@ -31,7 +31,7 @@ for a simple expressions, like prefix/suffix validation. For example `target: '*
 ```javascript
 router.appendRoutes({
 	// ...
-	path: 'get/{id|name_*}', 
+	path: 'get/{id|name_*}',
 });
 ```
 
@@ -41,16 +41,26 @@ In this example, the path parameter **by** must start with `'name_'`.
 **Configuration Example**
 
 ```javascript
+// Long Notation
 router.appendRoutes({
 	// ...
 	params:
 	{
-		name: 
+		name:
 		{
 			// type: 'wildcard'
 			type:	'wild',
-			exp:	['name_*'] 
+			exp:	'name_*'
 		}
+	},
+});
+
+// Short Notation
+router.appendRoutes({
+	// ...
+	params:
+	{
+		name: 'name_*'
 	}, 
 });
 ```
@@ -59,14 +69,14 @@ router.appendRoutes({
 **Using Predefined Instance**
 
 ```javascript
-prm = new WildcardParam('name', ['name_*']);
+prm = new WildcardParam('name', 'name_*');
 
 router.appendRoutes({
 	// ...
 	params:
 	{
 		name: prm
-	} 
+	}
 });
 ```
 

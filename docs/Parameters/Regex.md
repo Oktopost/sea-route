@@ -43,6 +43,7 @@ be treated as a [Wildcard Parameter](./Wild.md).
 **Configuration Example**
 
 ```javascript
+// Long notation
 router.appendRoutes({
 	// ...
 	params:
@@ -52,6 +53,15 @@ router.appendRoutes({
 			type:	'regex',
 			exp:	/^001[a-z]+$/
 		}
+	}, 
+});
+
+// Short notation
+router.appendRoutes({
+	// ...
+	params:
+	{
+		name: /^001[a-z]+$/
 	}, 
 });
 ```
