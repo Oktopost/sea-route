@@ -331,7 +331,7 @@ suite('Router', () =>
 			assert.deepEqual({b: 'nnn', a: '5'}, paramsAB);
 			
 			subject.handle('/b');
-			assert.deepEqual({c: 'b', d: undefined}, paramsCD);
+			assert.deepEqual({c: 'b'}, paramsCD);
 			
 			subject.handle('/a/4/test/123');
 			assert.deepEqual({prm: 123}, paramsA4Test);

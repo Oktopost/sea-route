@@ -160,10 +160,22 @@ namespace('SeaRoute.Route', function(root)
 	{
 		var params = {};
 		var length = this.partsCount();
+		var part;
+		var param;
 		
 		for (var index = 0; index < length; index++)
 		{
-			this._parts[index].extract(rawPath[index], params);
+			part = this._parts[index];
+			param = part.getParam();
+			
+		 	if (is.defined(rawPath[index]))
+			{
+				part.extract(rawPath[index], params);
+			}
+			else if (param.hasDefaultValue())
+			{
+				params[param.name()] = param.defaultValue();
+			}
 		}
 		
 		return params;

@@ -170,6 +170,39 @@ suite('Path', () =>
 			
 			assert.deepEqual({'nn': 123}, path.extract(['a', 'b']));
 		});
+		
+		test('Missing optional parameter, parameter not present in result', () =>
+		{
+			var path = new Path('/a/{nn}');
+			
+			var part1 = new Part('a');
+			var part2 = new Part('{nn}');
+			
+			var param2 = new Param('nn');
+			param2.setIsOptional(true);
+			
+			path.addPart(part1);
+			path.addPart(part2.setParam(param2));
+			
+			assert.deepEqual({}, path.extract(['a']));
+		});
+		
+		test('Missing optional parameter, default value used', () =>
+		{
+			var path = new Path('/a/{nn}');
+			
+			var part1 = new Part('a');
+			var part2 = new Part('{nn}');
+			
+			var param2 = new Param('nn');
+			param2.setIsOptional(true);
+			param2.setDefaultValue(123)
+			
+			path.addPart(part1);
+			path.addPart(part2.setParam(param2));
+			
+			assert.deepEqual({ nn: 123 }, path.extract(['a']));
+		});
 	});
 	
 	suite('encode', () =>
