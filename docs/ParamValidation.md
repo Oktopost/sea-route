@@ -15,11 +15,12 @@
 | [Enum](./Parameters/Enum.md)|The input parameter must match one of the values in a predefined array. |
 | [Wildcard](./Parameters/Wild.md)|The input must match a simple wildcard expression. |
 | [Regex](./Parameters/Regex.md)|The input must match a regular expression. |
+| [Flag](./Parameters/Flag.md)|Detect if a value is present in the URL's path. |
 
 
 ### Creating Costume Validation Object
 
-To create a costume validatin object you must extend the `SeaRoute.ParamType.Param` class and 
+To create a costume validation object you must extend the `SeaRoute.ParamType.Param` class and 
 override the relevant methods
 
 Another option is to use the `SeaRoute.ParamType.CallbackParam` object. It's constructor accepts 
