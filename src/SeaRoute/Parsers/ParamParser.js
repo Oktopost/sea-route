@@ -86,7 +86,7 @@ namespace('SeaRoute.Parsers', function(root)
 				throw new Error('The config "values" is required for param of type "array" and must be an Array of strings'); 
 			}
 			
-			return new OneOfParam(name, ['a']);
+			return new OneOfParam(name, config.values);
 		},
 		
 		_createRegexParam: function (name, config)
