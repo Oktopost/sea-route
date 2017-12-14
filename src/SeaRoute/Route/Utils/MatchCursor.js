@@ -1,7 +1,5 @@
-namespace('SeaRoute.Route.Utils', function(root) {
-	'use strict';
-	
-	
+namespace('SeaRoute.Route.Utils', function (root) 
+{
 	var url		= root.Plankton.url;
 	
 
@@ -10,7 +8,8 @@ namespace('SeaRoute.Route.Utils', function(root) {
 	 * 
 	 * @param {string} query
 	 */
-	var MatchCursor = function(query) {
+	var MatchCursor = function(query)
+	{
 		var urlData = url.decode(query);
 		
 		this.rawParts	= urlData.path;

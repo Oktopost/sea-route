@@ -9,8 +9,7 @@ namespace('SeaRoute.Parsers', function(root, SeaRoute) {
 	var ParamParser	= root.SeaRoute.Parsers.ParamParser;
 	
 	var is			= root.Plankton.is;
-	var obj			= root.Plankton.obj;
-	var array		= root.Plankton.array;
+	var foreach		= root.Plankton.foreach;
 	var classify	= root.Classy.classify;
 	
 	
@@ -23,7 +22,8 @@ namespace('SeaRoute.Parsers', function(root, SeaRoute) {
 		 * @param {{}} predefined
 		 * @private
 		 */
-		_extractPathParams: function (config, predefined) {
+		_extractPathParams: function (config, predefined) 
+		{
 			PathParser.parse(config.path, config.params, predefined);
 		},
 		
@@ -32,8 +32,10 @@ namespace('SeaRoute.Parsers', function(root, SeaRoute) {
 		 * @return {{}}
 		 * @private
 		 */
-		_parseParameters: function (config) {
-			obj.forEach.pair(config.params, function (key, value) {
+		_parseParameters: function (config)
+		{
+			foreach.pair(config.params, function (key, value)
+			{
 				config.params[key] = ParamParser.parse(key, value);
 			});
 		},
@@ -43,7 +45,8 @@ namespace('SeaRoute.Parsers', function(root, SeaRoute) {
 		 * @return {SeaRoute.Route.Path}
 		 * @private
 		 */
-		_createPath: function (config) {
+		_createPath: function (config)
+		{
 			var path = new Path(config.path);
 			var str = config.path.toString();
 			var part;
@@ -53,12 +56,15 @@ namespace('SeaRoute.Parsers', function(root, SeaRoute) {
 			var pipelineIndex;
 			
 
-			while (str.length > 0) {
-				if (str[0] === '/') {
+			while (str.length > 0)
+			{
+				if (str[0] === '/')
+				{
 					str = str.substr(1);
-				
+				}
 				// Create parameter
-				} else if (str[0] === '{') {
+				else if (str[0] === '{')
+				{
 					pipelineIndex 	= str.indexOf('|');
 					index			= str.indexOf('}');
 					name			= str.substr(0, index + 1);
@@ -86,14 +92,17 @@ namespace('SeaRoute.Parsers', function(root, SeaRoute) {
 					path.addPart(part);
 					
 					str = str.substr(index + 1);
-				
+				}
 				// Last const parameter
-				} else if (str.indexOf('/') === -1) {
+				else if (str.indexOf('/') === -1)
+				{
 					path.addPart(new Part(str));
 					break;
 					
+				}
 				// Const parameter
-				} else {
+				else
+				{
 					index	= str.indexOf('/');
 					name	= str.substr(0, index);
 					str		= str.substr(index + 1);
@@ -110,25 +119,30 @@ namespace('SeaRoute.Parsers', function(root, SeaRoute) {
 		 * @param {{}} config
 		 * @private
 		 */
-		_createRoute: function (path, config) {
+		_createRoute: function (path, config)
+		{
 			var route = new Route(path, config.callback);
 			var allParams = {}; 
 			
-			obj.forEach.key(config.params, function (key) {
+			foreach.key(config.params, function (key)
+			{
 				allParams[key] = true;
 			});
 			
-			array.forEach(path.parts(),
+			foreach(path.parts(),
 				/**
 				 * @param {SeaRoute.Route.Part} part
 				 */
-				function (part) {
-					if (!part.isConst()) {
+				function (part)
+				{
+					if (!part.isConst())
+					{
 						delete allParams[part.getParamName()];
 					}
 				});
 			
-			obj.forEach.key(allParams, function (paramName) {
+			foreach.key(allParams, function (paramName)
+			{
 				route.addQueryParam(config.params[paramName]);
 			});
 			
@@ -139,18 +153,24 @@ namespace('SeaRoute.Parsers', function(root, SeaRoute) {
 		 * @param {*} config
 		 * @private
 		 */
-		_validate: function (config) {
-			if (!is.string(config.path)) {
+		_validate: function (config)
+		{
+			if (!is.string(config.path))
+			{
 				throw 'Path not set for route';
-			} else if (config.path === '' || config.path[0] !== '/') {
+			}
+			else if (config.path === '' || config.path[0] !== '/')
+			{
 				config.path = '/' + config.path; 
 			}
 			
-			if (!is.function(config.callback)) {
+			if (!is.function(config.callback))
+			{
 				throw 'Callback not set for route';
 			}
 			
-			if (!is.object(config.params)) {
+			if (!is.object(config.params))
+			{
 				config.params = {};
 			}
 		},
@@ -161,7 +181,8 @@ namespace('SeaRoute.Parsers', function(root, SeaRoute) {
 		 * @param {{}} predefined
 		 * @return {SeaRoute.Route.Route}
 		 */
-		parse: function (config, predefined) {
+		parse: function (config, predefined)
+		{
 			var route;
 			var path;
 			

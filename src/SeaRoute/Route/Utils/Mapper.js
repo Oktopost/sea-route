@@ -75,15 +75,18 @@ namespace('SeaRoute.Route.Utils', function(root) {
 				chainTip[cursor.current] = cursor.route;
 			}
 			
-			if (result !== false) {
+			if (result !== false)
+			{
 				chain[currentKey] = chainTip;
-			} else {
+			}
+			else
+			{
 				result = chainTip;
 			}
 			
 			cursor.goto(index);
 			
-			return (result || chainTip);
+			return result;
 		},
 
 		/**

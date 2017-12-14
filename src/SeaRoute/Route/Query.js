@@ -1,7 +1,7 @@
 namespace('SeaRoute.Route', function(root)
 {
 	var is		= root.Plankton.is;
-	var as		= root.Plankton.as;
+	var array	= root.Plankton.array;
 	var foreach	= root.Plankton.foreach;
 	
 	
@@ -134,7 +134,7 @@ namespace('SeaRoute.Route', function(root)
 	 */
 	Query.prototype.add = function (params)
 	{
-		params = as.array(params);
+		params = array(params);
 		this._params = this._params.concat(params);
 		return this;
 	};

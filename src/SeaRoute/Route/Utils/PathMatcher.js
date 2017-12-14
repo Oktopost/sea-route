@@ -1,9 +1,7 @@
-namespace('SeaRoute.Route.Utils', function(root) {
-	'use strict';
-	
-	
+namespace('SeaRoute.Route.Utils', function (root) 
+{
 	var is		= root.Plankton.is;
-	var array	= root.Plankton.array;
+	var foreach	= root.Plankton.foreach;
 	
 	var Route	= root.SeaRoute.Route.Route;
 	
@@ -18,15 +16,23 @@ namespace('SeaRoute.Route.Utils', function(root) {
 		 * @param {SeaRoute.Route.Utils.MatchCursor} cursor
 		 * @return {boolean}
 		 */
-		matchElement: function (element, cursor) {
-			if (element instanceof Route) {
+		matchElement: function (element, cursor)
+		{
+			if (element instanceof Route) 
+			{
 				return PathMatcher.matchRoute(element, cursor);
-			} else if (is.array(element)) {
+			}
+			else if (is.array(element))
+			{
 				return PathMatcher.matchArray(element, cursor);
-			} else if (is.object(element)) {
+			}
+			else if (is.object(element))
+			{
 				return PathMatcher.matchMap(element, cursor);
-			} else {
-				throw 'Unexpected element: ' + element.toString();
+			}
+			else
+			{
+				throw new Error('Unexpected element: ' + element.toString());
 			}
 		},
 		
@@ -35,8 +41,10 @@ namespace('SeaRoute.Route.Utils', function(root) {
 		 * @param {SeaRoute.Route.Utils.MatchCursor} cursor
 		 * @return {boolean}
 		 */
-		matchRoute: function (route, cursor) {
-			if (route.isMatching(cursor.rawParts)) {
+		matchRoute: function (route, cursor)
+		{
+			if (route.isMatching(cursor.rawParts))
+			{
 				route.handle(cursor.rawParts, cursor.rawQuery);
 				return true;
 			}
@@ -49,11 +57,14 @@ namespace('SeaRoute.Route.Utils', function(root) {
 		 * @param {SeaRoute.Route.Utils.MatchCursor} cursor
 		 * @return {boolean}
 		 */
-		matchArray: function (set, cursor) {
+		matchArray: function (set, cursor)
+		{
 			var result = false;
 			
-			array.forEach(set, function (value) {
-				if (PathMatcher.matchElement(value, cursor)) {
+			foreach(set, function (value)
+			{
+				if (PathMatcher.matchElement(value, cursor))
+				{
 					result = true;
 					return false;
 				}
@@ -67,10 +78,14 @@ namespace('SeaRoute.Route.Utils', function(root) {
 		 * @param {SeaRoute.Route.Utils.MatchCursor} cursor
 		 * @return {boolean}
 		 */
-		matchMap: function (map, cursor) {
-			if (cursor.EOP) {
+		matchMap: function (map, cursor)
+		{
+			if (cursor.EOP)
+			{
 				return false;
-			} else if (!is.defined(map[cursor.current])) {
+			}
+			else if (!is.defined(map[cursor.current]))
+			{
 				return false;
 			}
 			
@@ -78,7 +93,8 @@ namespace('SeaRoute.Route.Utils', function(root) {
 			
 			cursor.forward();
 			
-			if (PathMatcher.matchElement(element, cursor)) {
+			if (PathMatcher.matchElement(element, cursor))
+			{
 				return true;
 			}
 			

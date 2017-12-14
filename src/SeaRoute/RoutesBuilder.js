@@ -7,7 +7,7 @@ namespace('SeaRoute', function(root)
 	
 	var is			= root.Plankton.is;
 	var obj			= root.Plankton.obj;
-	var array		= root.Plankton.array;
+	var foreach		= root.Plankton.foreach;
 	var classify	= root.Classy.classify;
 	
 	
@@ -55,7 +55,7 @@ namespace('SeaRoute', function(root)
 		var result = [];
 		var self = this;
 		
-		array.forEach(data, function (item)
+		foreach(data, function (item)
 		{
 			result.push(self.create(item));
 		});
@@ -129,7 +129,7 @@ namespace('SeaRoute', function(root)
 		var result = {};
 		var self = this;
 		
-		obj.forEach.pair(data, function (key, value)
+		foreach.pair(data, function (key, value)
 		{
 			if (is.function(value.callback) && !is.string(value.path))
 			{
@@ -211,13 +211,13 @@ namespace('SeaRoute', function(root)
 		}
 		else
 		{
-			obj.forEach.pair(params, function (key, param)
+			foreach.pair(params, this, function (key, param)
 			{
 				this._addParam(key, param);
-			}, this);
+			});
 		}
 	};
 	
 	
 	this.RoutesBuilder = RoutesBuilder;
-}); 
+});

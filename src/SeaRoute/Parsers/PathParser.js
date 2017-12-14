@@ -1,7 +1,7 @@
 namespace('SeaRoute.Parsers', function(root)
 {
 	var is			= root.Plankton.is;
-	var array		= root.Plankton.array;
+	var foreach		= root.Plankton.foreach;
 	var classify	= root.Classy.classify;
 	
 	var FlagParam	= root.SeaRoute.ParamType.FlagParam;
@@ -227,7 +227,7 @@ namespace('SeaRoute.Parsers', function(root)
 		{
 			var pathParams = this._getParameterParts(path);
 			
-			array.forEach(pathParams, function (param)
+			foreach(pathParams, function (param)
 			{
 				PathParser._parseParam(param, config, preDefinedParams);
 			});

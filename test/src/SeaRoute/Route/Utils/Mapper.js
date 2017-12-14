@@ -4,15 +4,16 @@
 const SeaRoute = require('../../../../index');
 const is = namespace().Plankton.is;
 const obj = namespace().Plankton.obj;
-const array = namespace().Plankton.array;
+
+const array		= namespace().Plankton.array;
+const foreach	= namespace().Plankton.foreach;
 
 
 const Part		= SeaRoute.Route.Part;
 const Path		= SeaRoute.Route.Path;
 const Route		= SeaRoute.Route.Route;
 const Mapper	= SeaRoute.Route.Utils.Mapper;
-const MapCursor	= SeaRoute.Route.Utils.MapCursor;
-const Param		= SeaRoute.ParamType.Param; 
+const MapCursor	= SeaRoute.Route.Utils.MapCursor; 
 
 const assert = require('chai').assert;
 
@@ -31,7 +32,7 @@ suite('Mapper', () => {
 			parts = [];
 		}
 		
-		array.forEach(parts, (str) => {
+		foreach(parts, (str) => {
 			var part;
 			
 			if (str === null) {
@@ -56,7 +57,7 @@ suite('Mapper', () => {
 		} else if (is.array(data)) {
 			var arr = [];
 			
-			array.forEach(data, (val) => {
+			foreach(data, (val) => {
 				arr.push(clone(val));	
 			});
 			
@@ -64,7 +65,7 @@ suite('Mapper', () => {
 		} else if (is.object(data)) {
 			var map = {};
 			
-			obj.forEach.pair(data, (k, val) => {
+			foreach.pair(data, (k, val) => {
 				map[k] = clone(val);	
 			});
 			
@@ -86,11 +87,11 @@ suite('Mapper', () => {
 				throw 'No match';
 			}
 			
-			array.forEach.key(expected, (index) => {
+			foreach.key(expected, (index) => {
 				_assertMap(expected[index], result[index]);
 			});
 		} else if (is.object(expected) && is.object(result) && obj.count(expected) === obj.count(result)) {
-			obj.forEach.key(expected, (k) => {
+			foreach.key(expected, (k) => {
 				_assertMap(expected[k], result[k]);
 			});
 		} else {
@@ -104,7 +105,7 @@ suite('Mapper', () => {
 		} else if (is.array(data)) {
 			var arr = [];
 			
-			array.forEach.key(data, (key) => {
+			foreach.key(data, (key) => {
 				arr[key] = _getPrintObject(data[key]);	
 			});
 			
@@ -112,7 +113,7 @@ suite('Mapper', () => {
 		} else if (is.object(data)) {
 			var map = {};
 			
-			obj.forEach.pair(data, (k, val) => {
+			foreach.pair(data, (k, val) => {
 				map[k] = _getPrintObject(val);	
 			});
 			
